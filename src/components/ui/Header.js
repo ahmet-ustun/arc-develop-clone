@@ -2,7 +2,8 @@ import React from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+
+import { useScrollTrigger } from "@material-ui/core";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -20,7 +21,7 @@ function ElevationScroll(props) {
 function Header() {
   return (
     <ElevationScroll>
-      <AppBar position="fixed">
+      <AppBar>
         <Toolbar>Arc Development</Toolbar>
       </AppBar>
     </ElevationScroll>
