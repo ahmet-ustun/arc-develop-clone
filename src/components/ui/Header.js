@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 
 import { useScrollTrigger } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { Link } from "react-router-dom";
 
 import logo from "../../assets/logo.svg";
 
@@ -68,11 +69,36 @@ function Header() {
               value={value}
               onChange={handleChange}
             >
-              <Tab className={classes.tab} label="Home" />
-              <Tab className={classes.tab} label="Services" />
-              <Tab className={classes.tab} label="The Revolution" />
-              <Tab className={classes.tab} label="About Us" />
-              <Tab className={classes.tab} label="Contact Us" />
+              <Tab
+                className={classes.tab}
+                label="Home"
+                component={Link}
+                to="/"
+              />
+              <Tab
+                className={classes.tab}
+                label="Services"
+                component={Link}
+                to="/services"
+              />
+              <Tab
+                className={classes.tab}
+                label="The Revolution"
+                component={Link}
+                to="/revolution"
+              />
+              <Tab
+                className={classes.tab}
+                label="About Us"
+                component={Link}
+                to="/about"
+              />
+              <Tab
+                className={classes.tab}
+                label="Contact Us"
+                component={Link}
+                to="/contact"
+              />
             </Tabs>
             <Button
               className={classes.button}
