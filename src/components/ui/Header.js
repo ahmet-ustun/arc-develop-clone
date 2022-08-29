@@ -164,14 +164,46 @@ function Header() {
               anchorEl={anchorEl}
               open={isOpen}
               MenuListProps={{ onMouseLeave: handleClose }}
+              // onClose={handleClose}
             >
-              <MenuItem component={Link} to="/software" onClick={handleClose}>
+              <MenuItem
+                component={Link}
+                to="/services"
+                onClick={() => {
+                  handleClose();
+                  setValue(1);
+                }}
+              >
+                Services
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/software"
+                onClick={() => {
+                  handleClose();
+                  setValue(1);
+                }}
+              >
                 Software Development
               </MenuItem>
-              <MenuItem component={Link} to="/mobile" onClick={handleClose}>
+              <MenuItem
+                component={Link}
+                to="/mobile"
+                onClick={() => {
+                  handleClose();
+                  setValue(1);
+                }}
+              >
                 Mobile App Development
               </MenuItem>
-              <MenuItem component={Link} to="/website" onClick={handleClose}>
+              <MenuItem
+                component={Link}
+                to="/website"
+                onClick={() => {
+                  handleClose();
+                  setValue(1);
+                }}
+              >
                 Website Development
               </MenuItem>
             </Menu>
