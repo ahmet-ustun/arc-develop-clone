@@ -5,6 +5,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { useScrollTrigger } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     ...theme.typography.estimate,
     borderRadius: "50px",
-    marginLeft: "50px",
+    marginLeft: "25px",
     marginRight: "25px",
     height: "45px",
   },
@@ -59,9 +61,21 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (event, value) => {
     setValue(value);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.target);
+    setIsOpen(true);
+  };
+
+  const handleClose = (event) => {
+    setAnchorEl(null);
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -112,6 +126,9 @@ function Header() {
                 component={Link}
                 to="/services"
                 disableRipple
+                aria-owns={anchorEl ? "simple-menu" : undefined}
+                aria-haspopup={anchorEl ? "true" : undefined}
+                onMouseOver={handleClick}
               />
               <Tab
                 className={classes.tab}
@@ -142,6 +159,22 @@ function Header() {
             >
               Free Estimate
             </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={isOpen}
+              MenuListProps={{ onMouseLeave: handleClose }}
+            >
+              <MenuItem component={Link} to="/software" onClick={handleClose}>
+                Software Development
+              </MenuItem>
+              <MenuItem component={Link} to="/mobile" onClick={handleClose}>
+                Mobile App Development
+              </MenuItem>
+              <MenuItem component={Link} to="/website" onClick={handleClose}>
+                Website Development
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
