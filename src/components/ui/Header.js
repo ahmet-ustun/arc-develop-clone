@@ -56,6 +56,18 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "25px",
     height: "45px",
   },
+  menu: {
+    background: theme.palette.common.blue,
+    color: "white",
+    borderRadius: 0,
+  },
+  menuItem: {
+    ...theme.typography.tab,
+    opacity: 0.7,
+    "&:hover": {
+      opacity: 1,
+    },
+  },
 }));
 
 function Header() {
@@ -128,7 +140,7 @@ function Header() {
                 disableRipple
                 aria-owns={anchorEl ? "simple-menu" : undefined}
                 aria-haspopup={anchorEl ? "true" : undefined}
-                onMouseOver={handleClick}
+                onMouseEnter={handleClick}
               />
               <Tab
                 className={classes.tab}
@@ -161,12 +173,14 @@ function Header() {
             </Button>
             <Menu
               id="simple-menu"
+              classes={{ paper: classes.menu }}
               anchorEl={anchorEl}
               open={isOpen}
+              elevation="0"
               MenuListProps={{ onMouseLeave: handleClose }}
-              // onClose={handleClose}
             >
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
                 to="/services"
                 onClick={() => {
@@ -177,8 +191,9 @@ function Header() {
                 Services
               </MenuItem>
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
-                to="/software"
+                to="/services/software"
                 onClick={() => {
                   handleClose();
                   setValue(1);
@@ -187,8 +202,9 @@ function Header() {
                 Software Development
               </MenuItem>
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
-                to="/mobile"
+                to="/services/mobile"
                 onClick={() => {
                   handleClose();
                   setValue(1);
@@ -197,8 +213,9 @@ function Header() {
                 Mobile App Development
               </MenuItem>
               <MenuItem
+                classes={{ root: classes.menuItem }}
                 component={Link}
-                to="/website"
+                to="/services/website"
                 onClick={() => {
                   handleClose();
                   setValue(1);
