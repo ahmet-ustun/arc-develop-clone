@@ -10,11 +10,14 @@ import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import IconButton from "@material-ui/core/IconButton";
 
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/logo.svg";
+import MenuIcon from "@material-ui/icons/Menu";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -82,6 +85,16 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  drawerIconContainer: {
+    marginLeft: "auto",
+    "&:hover": {
+      background: "transparent",
+    },
+  },
+  drawerIcon: {
+    height: "50px",
+    width: "50px",
+  },
 }));
 
 function Header() {
@@ -89,10 +102,13 @@ function Header() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [tabValue, setTabValue] = useState(0);
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleChange = (event, value) => {
     setTabValue(value);
@@ -254,6 +270,27 @@ function Header() {
     </React.Fragment>
   );
 
+  const siteDrawer = (
+    <React.Fragment>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={isDrawerOpen}
+        onOpen={() => setIsDrawerOpen(true)}
+        onClose={() => setIsDrawerOpen(false)}
+      >
+        Test
+      </SwipeableDrawer>
+      <IconButton
+        className={classes.drawerIconContainer}
+        disableRipple
+        onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+      >
+        <MenuIcon className={classes.drawerIcon} />
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       <ElevationScroll>
@@ -268,7 +305,7 @@ function Header() {
             >
               <img className={classes.logo} src={logo} alt="Company Logo" />
             </Button>
-            {matches ? null : siteTabs}
+            {matches ? siteDrawer : siteTabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
