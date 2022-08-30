@@ -111,6 +111,7 @@ function Header() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleChange = (event, value) => {
+    console.log(event);
     setTabValue(value);
   };
 
@@ -119,12 +120,12 @@ function Header() {
     setIsMenuOpen(true);
   };
 
-  const handleClose = (event) => {
+  const handleClose = () => {
     setAnchorEl(null);
     setIsMenuOpen(false);
   };
 
-  const handleMenuItem = (event, index) => {
+  const handleMenuItem = (index) => {
     setAnchorEl(null);
     setIsMenuOpen(false);
     setItemIndex(index);
@@ -257,8 +258,8 @@ function Header() {
             component={Link}
             to={menuItem.path}
             selected={index === itemIndex && tabValue === 1}
-            onClick={(event) => {
-              handleMenuItem(event, index);
+            onClick={() => {
+              handleMenuItem(index);
               setTabValue(1);
               handleClose();
             }}
