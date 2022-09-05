@@ -69,8 +69,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 10,
     marginLeft: "25px",
   },
+  indicator: { display: 'none' },
   button: {
     ...theme.typography.estimate,
+    background: theme.palette.common.orange,
+    opacity: 1,
     borderRadius: "50px",
     marginLeft: "25px",
     marginRight: "25px",
@@ -122,10 +125,12 @@ function Header() {
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const [anchorEl, setAnchorEl] = useState(null);
+
   const [tabValue, setTabValue] = useState(0);
   const [itemIndex, setItemIndex] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleChange = (event, value) => {
     console.log(event);
@@ -134,144 +139,117 @@ function Header() {
 
   const handleClick = (event) => {
     setAnchorEl(event.target);
-    setIsMenuOpen(true);
+    setOpenMenu(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setIsMenuOpen(false);
+    setOpenMenu(false);
   };
 
   const handleMenuItem = (index) => {
     setAnchorEl(null);
-    setIsMenuOpen(false);
+    setOpenMenu(false);
     setItemIndex(index);
   };
 
+  const siteRoutes = [
+    { name: "Home", path: "/", activeIndex: 0 },
+    {
+      name: "Services",
+      path: "/services",
+      activeIndex: 1,
+      ariaOwns: anchorEl ? "simple-menu" : undefined,
+      ariaHasPopup: anchorEl ? "true" : undefined,
+      onMouseEnter: handleClick,
+    },
+    { name: "The Revolution", path: "/revolution", activeIndex: 2 },
+    { name: "About Us", path: "/about", activeIndex: 3 },
+    { name: "Contact Us", path: "/contact", activeIndex: 4 },
+  ];
+
   const menuItems = [
-    { name: "Services", path: "/services" },
-    { name: "Software Development", path: "/services/software" },
-    { name: "Mobile App Development", path: "/services/mobile" },
-    { name: "Website Development", path: "/services/website" },
+    { name: "Services", path: "/services", activeIndex: 1, selectedIndex: 0 },
+    {
+      name: "Software Development",
+      path: "/services/software",
+      activeIndex: 1,
+      selectedIndex: 1,
+    },
+    {
+      name: "Mobile App Development",
+      path: "/services/mobile",
+      activeIndex: 1,
+      selectedIndex: 2,
+    },
+    {
+      name: "Website Development",
+      path: "/services/website",
+      activeIndex: 1,
+      selectedIndex: 3,
+    },
   ];
 
   useEffect(() => {
-    switch (window.location.pathname) {
-      case "/":
-        if (tabValue !== 0) {
-          setTabValue(0);
-        }
-        break;
-      case "/services":
-        if (tabValue !== 1) {
-          setTabValue(1);
-          setItemIndex(0);
-        }
-        break;
-      case "/services/software":
-        if (tabValue !== 1) {
-          setTabValue(1);
-          setItemIndex(1);
-        }
-        break;
-      case "/services/mobile":
-        if (tabValue !== 1) {
-          setTabValue(1);
-          setItemIndex(2);
-        }
-        break;
-      case "/services/website":
-        if (tabValue !== 1) {
-          setTabValue(1);
-          setItemIndex(3);
-        }
-        break;
-      case "/revolution":
-        if (tabValue !== 2) {
-          setTabValue(2);
-        }
-        break;
-      case "/about":
-        if (tabValue !== 3) {
-          setTabValue(3);
-        }
-        break;
-      case "/contact":
-        if (tabValue !== 4) {
-          setTabValue(4);
-        }
-        break;
-      case "/estimate":
-        if (tabValue !== 5) {
+    [...menuItems, ...siteRoutes].forEach((route) => {
+      switch (window.location.pathname) {
+        case `${route.path}`:
+          if (route.activeIndex !== tabValue) {
+            setTabValue(route.activeIndex);
+            if (route.selectedIndex && route.selectedIndex !== itemIndex) {
+              setItemIndex(route.selectedIndex);
+            }
+          }
+          break;
+        case "/estimate":
           setTabValue(5);
-        }
-        break;
-      default:
-        break;
-    }
-  }, [tabValue]);
+          break;
+        default:
+          break;
+      }
+    });
+  }, [tabValue, itemIndex, siteRoutes, menuItems]);
 
   const siteTabs = (
     <React.Fragment>
       <Tabs
-        className={classes.tabContainer}
+        classes={{ root: classes.tabContainer, indicator: classes.indicator }}
         value={tabValue}
         onChange={handleChange}
       >
+        {siteRoutes.map((siteRoute, index) => (
+          <Tab
+            className={classes.tab}
+            key={`${siteRoute.name}-${index}`}
+            label={siteRoute.name}
+            component={Link}
+            to={siteRoute.path}
+            aria-owns={siteRoute.ariaOwns}
+            aria-haspopup={siteRoute.ariaHasPopup}
+            onMouseEnter={siteRoute.onMouseEnter}
+            disableRipple
+          />
+        ))}
         <Tab
-          className={classes.tab}
-          label="Home"
+          className={classes.button}
+          label="Free Estimate"
           component={Link}
-          to="/"
-          disableRipple
-        />
-        <Tab
-          className={classes.tab}
-          label="Services"
-          component={Link}
-          to="/services"
-          disableRipple
-          aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup={anchorEl ? "true" : undefined}
-          onMouseEnter={handleClick}
-        />
-        <Tab
-          className={classes.tab}
-          label="The Revolution"
-          component={Link}
-          to="/revolution"
-          disableRipple
-        />
-        <Tab
-          className={classes.tab}
-          label="About Us"
-          component={Link}
-          to="/about"
-          disableRipple
-        />
-        <Tab
-          className={classes.tab}
-          label="Contact Us"
-          component={Link}
-          to="/contact"
-          disableRipple
+          to="/estimate"
         />
       </Tabs>
-      <Button className={classes.button} variant="contained" color="secondary">
-        Free Estimate
-      </Button>
       <Menu
         id="simple-menu"
         classes={{ paper: classes.menu }}
         anchorEl={anchorEl}
-        open={isMenuOpen}
+        open={openMenu}
         elevation={0}
+        keepMounted
         MenuListProps={{ onMouseLeave: handleClose }}
       >
         {menuItems.map((menuItem, index) => (
           <MenuItem
             classes={{ root: classes.menuItem }}
-            key={menuItem.name}
+            key={`${menuItem.name}-${index}`}
             component={Link}
             to={menuItem.path}
             selected={index === itemIndex && tabValue === 1}
@@ -294,121 +272,36 @@ function Header() {
         classes={{ paper: classes.drawer }}
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
-        open={isDrawerOpen}
-        onOpen={() => setIsDrawerOpen(true)}
-        onClose={() => setIsDrawerOpen(false)}
+        open={openDrawer}
+        onOpen={() => setOpenDrawer(true)}
+        onClose={() => setOpenDrawer(false)}
       >
         <List disablePadding>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/"
-            selected={tabValue === 0}
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setTabValue(0);
-            }}
-          >
-            <ListItemText
-              className={
-                tabValue === 0
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
+          {siteRoutes.map((siteRoute, index) => (
+            <ListItem
+              key={`${siteRoute.name}-${index}`}
+              divider
+              button
+              component={Link}
+              to={siteRoute.path}
+              selected={tabValue === siteRoute.activeIndex}
+              onClick={() => {
+                setOpenDrawer(false);
+                setTabValue(siteRoute.activeIndex);
+              }}
             >
-              Home
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/services"
-            selected={tabValue === 1}
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setTabValue(1);
-            }}
-          >
-            <ListItemText
-              className={
-                tabValue === 1
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
-              Services
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/revolution"
-            selected={tabValue === 2}
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setTabValue(2);
-            }}
-          >
-            <ListItemText
-              className={
-                tabValue === 2
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
-              The Revolution
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/about"
-            selected={tabValue === 3}
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setTabValue(3);
-            }}
-          >
-            <ListItemText
-              className={
-                tabValue === 3
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
-              About Us
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            divider
-            button
-            component={Link}
-            to="/contact"
-            selected={tabValue === 4}
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setTabValue(4);
-            }}
-          >
-            <ListItemText
-              className={
-                tabValue === 4
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
-              Contact Us
-            </ListItemText>
-          </ListItem>
+              <ListItemText
+                className={
+                  tabValue === siteRoute.activeIndex
+                    ? `${classes.drawerItem} ${classes.drawerItemSelected}`
+                    : classes.drawerItem
+                }
+                disableTypography
+              >
+                {siteRoute.name}
+              </ListItemText>
+            </ListItem>
+          ))}
           <ListItem
             className={classes.drawerItemEstimate}
             divider
@@ -417,14 +310,14 @@ function Header() {
             to="/estimate"
             selected={tabValue === 5}
             onClick={() => {
-              setIsDrawerOpen(false);
+              setOpenDrawer(false);
               setTabValue(5);
             }}
           >
             <ListItemText
               className={
                 tabValue === 5
-                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  ? `${classes.drawerItem} ${classes.drawerItemSelected}`
                   : classes.drawerItem
               }
               disableTypography
@@ -437,7 +330,7 @@ function Header() {
       <IconButton
         className={classes.drawerIconContainer}
         disableRipple
-        onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+        onClick={() => setOpenDrawer(!openDrawer)}
       >
         <MenuIcon className={classes.drawerIcon} />
       </IconButton>
