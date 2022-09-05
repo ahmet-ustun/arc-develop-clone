@@ -12,6 +12,9 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
@@ -94,6 +97,20 @@ const useStyles = makeStyles((theme) => ({
   drawerIcon: {
     height: "50px",
     width: "50px",
+  },
+  drawer: {
+    background: theme.palette.common.blue,
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: "white",
+    opacity: 0.7,
+  },
+  drawerItemSelected: {
+    opacity: 1,
+  },
+  drawerItemEstimate: {
+    background: theme.palette.common.orange,
   },
 }));
 
@@ -274,13 +291,148 @@ function Header() {
   const siteDrawer = (
     <React.Fragment>
       <SwipeableDrawer
+        classes={{ paper: classes.drawer }}
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
         open={isDrawerOpen}
         onOpen={() => setIsDrawerOpen(true)}
         onClose={() => setIsDrawerOpen(false)}
       >
-        Test
+        <List disablePadding>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/"
+            selected={tabValue === 0}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(0);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 0
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Home
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/services"
+            selected={tabValue === 1}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(1);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 1
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Services
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/revolution"
+            selected={tabValue === 2}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(2);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 2
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              The Revolution
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/about"
+            selected={tabValue === 3}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(3);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 3
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              About Us
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            divider
+            button
+            component={Link}
+            to="/contact"
+            selected={tabValue === 4}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(4);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 4
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Contact Us
+            </ListItemText>
+          </ListItem>
+          <ListItem
+            className={classes.drawerItemEstimate}
+            divider
+            button
+            component={Link}
+            to="/estimate"
+            selected={tabValue === 5}
+            onClick={() => {
+              setIsDrawerOpen(false);
+              setTabValue(5);
+            }}
+          >
+            <ListItemText
+              className={
+                tabValue === 5
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Free Estimate
+            </ListItemText>
+          </ListItem>
+        </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
