@@ -120,18 +120,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header() {
+function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
+  const { tabValue, setTabValue, itemIndex, setItemIndex } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const [tabValue, setTabValue] = useState(0);
-  const [itemIndex, setItemIndex] = useState(0);
-
   const [openMenu, setOpenMenu] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -211,7 +208,7 @@ function Header() {
           break;
       }
     });
-  }, [tabValue, itemIndex, siteRoutes, menuItems]);
+  }, [tabValue, setTabValue, itemIndex, setItemIndex, siteRoutes, menuItems]);
 
   const siteTabs = (
     <React.Fragment>
