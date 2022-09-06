@@ -56,9 +56,7 @@ function App() {
           />
         </Switch>
         <Footer
-          tabValue={tabValue}
           setTabValue={setTabValue}
-          itemIndex={itemIndex}
           setItemIndex={setItemIndex}
         />
       </BrowserRouter>
