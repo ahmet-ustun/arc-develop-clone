@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 10,
     marginLeft: "25px",
   },
-  indicator: { display: 'none' },
+  indicator: { display: "none" },
   button: {
     ...theme.typography.estimate,
     background: theme.palette.common.orange,
@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerItemEstimate: {
     background: theme.palette.common.orange,
+  },
+  appbar: {
+    zIndex: theme.zIndex.modal + 1,
   },
 }));
 
@@ -240,6 +243,7 @@ function Header() {
       <Menu
         id="simple-menu"
         classes={{ paper: classes.menu }}
+        style={{zIndex: 1305}}
         anchorEl={anchorEl}
         open={openMenu}
         elevation={0}
@@ -276,6 +280,7 @@ function Header() {
         onOpen={() => setOpenDrawer(true)}
         onClose={() => setOpenDrawer(false)}
       >
+        <div className={classes.toolbarMargin} />
         <List disablePadding>
           {siteRoutes.map((siteRoute, index) => (
             <ListItem
@@ -340,7 +345,7 @@ function Header() {
   return (
     <React.Fragment>
       <ElevationScroll>
-        <AppBar>
+        <AppBar className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               className={classes.logoContainer}
