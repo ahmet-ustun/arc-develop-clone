@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Theme from "./ui/Theme.js";
 import Header from "./ui/Header.js";
 import Footer from "./ui/Footer.js";
+import LandingPage from "./LandingPage.js";
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
@@ -21,7 +22,7 @@ function App() {
           setItemIndex={setItemIndex}
         />
         <Switch>
-          <Route exact path="/" component={() => <div>/</div>} />
+          <Route exact path="/" component={LandingPage} />
           <Route
             exact
             path="/services"
