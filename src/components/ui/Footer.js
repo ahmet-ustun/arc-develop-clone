@@ -6,7 +6,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 
-import footerAdornment from "../../assets/Footer Adornment.svg";
+import footerAdornment from "../../assets/footerAdornment.svg";
 import facebookLogo from "../../assets/facebook.svg";
 import twitterLogo from "../../assets/twitter.svg";
 import instagramLogo from "../../assets/instagram.svg";
