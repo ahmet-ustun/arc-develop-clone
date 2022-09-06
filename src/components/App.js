@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Theme from "./ui/Theme.js";
 import Header from "./ui/Header.js";
+import Footer from "./ui/Footer.js";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             component={() => <div>/estimate</div>}
           />
         </Switch>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

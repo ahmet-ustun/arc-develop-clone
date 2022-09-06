@@ -164,7 +164,7 @@ function Header() {
       activeIndex: 1,
       ariaOwns: anchorEl ? "simple-menu" : undefined,
       ariaHasPopup: anchorEl ? "true" : undefined,
-      onMouseEnter: handleClick,
+      onMouseEnter: (event) => handleClick(event),
     },
     { name: "The Revolution", path: "/revolution", activeIndex: 2 },
     { name: "About Us", path: "/about", activeIndex: 3 },
@@ -243,7 +243,7 @@ function Header() {
       <Menu
         id="simple-menu"
         classes={{ paper: classes.menu }}
-        style={{zIndex: 1305}}
+        style={{ zIndex: 1305 }}
         anchorEl={anchorEl}
         open={openMenu}
         elevation={0}
