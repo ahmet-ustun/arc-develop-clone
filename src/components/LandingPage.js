@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Lottie from "react-lottie";
 
 import animationData from "../animations/landingAnimation/data.js";
+import customSoftwareIcon from "../assets/customSoftwareIcon.svg";
 import ButtonArrow from "./ui/ButtonArrow.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,14 +35,13 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     marginTop: "1em",
   },
+  learnButton: {
+    ...theme.typography.learnButton,
+    fontSize: "0.7rem",
+    height: 35,
+  },
   learnButtonHero: {
-    borderColor: theme.palette.common.blue,
-    borderWidth: 2,
-    borderRadius: 50,
-    textTransform: "none",
-    color: theme.palette.common.blue,
-    fontFamily: "Roboto",
-    fontWeight: "bold",
+    ...theme.typography.learnButton,
     fontSize: "0.9rem",
     height: 45,
     width: 145,
@@ -62,6 +62,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 0,
     },
   },
+  specialText: {
+    fontFamily: "Pacifico",
+    color: theme.palette.common.orange,
+  },
+  subtitle: {
+    marginBottom: "1em",
+  },
 }));
 
 function LandingPage() {
@@ -80,6 +87,8 @@ function LandingPage() {
   return (
     <Grid container className={classes.mainContainer} direction="column">
       <Grid item>
+        {" "}
+        {/*----- Hero Block -----*/}
         <Grid container justifyContent="flex-end" alignItems="center">
           <Grid sm item className={classes.heroTextContainer}>
             <Typography variant="h2" align="center">
@@ -111,6 +120,33 @@ function LandingPage() {
           </Grid>
           <Grid sm item className={classes.animation}>
             <Lottie options={defaultOptions} height={"100%"} width={"100%"} />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        {" "}
+        {/*----- Services Block -----*/}
+        <Grid container>
+          <Grid item>
+            <Typography variant="h4">Software Development</Typography>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Save Energy. Save Time. Save Money.
+            </Typography>
+            <Typography variant="subtitle1">
+              Complete digital solutions, from investigation to{" "}
+              <span className={classes.specialText}>celebration</span>.
+            </Typography>
+            <Button className={classes.learnButton} variant="outlined">
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow
+                width={10}
+                height={10}
+                fill={theme.palette.common.blue}
+              />
+            </Button>
+          </Grid>
+          <Grid item>
+            <img src={customSoftwareIcon} alt="Software Development Icon" />
           </Grid>
         </Grid>
       </Grid>
