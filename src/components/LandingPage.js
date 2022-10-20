@@ -1,6 +1,7 @@
 import React from "react";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import Lottie from "react-lottie";
 
 import animationData from "../animations/landingAnimation/data.js";
-import customSoftwareIcon from "../assets/customSoftwareIcon.svg";
+import softwareIcon from "../assets/customSoftwareIcon.svg";
+import mobileAppIcon from "../assets/mobileIcon.svg";
+import websiteIcon from "../assets/websiteIcon.svg";
 import ButtonArrow from "./ui/ButtonArrow.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.learnButton,
     fontSize: "0.7rem",
     height: 35,
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "2em",
+    },
   },
   learnButtonHero: {
     ...theme.typography.learnButton,
@@ -55,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "2em",
     },
   },
+  serviceContainer: {
+    marginTop: "12em",
+    [theme.breakpoints.down("sm")]: {
+      padding: 25,
+    },
+  },
   heroTextContainer: {
     minWidth: "21.5em",
     marginLeft: "1em",
@@ -69,11 +81,19 @@ const useStyles = makeStyles((theme) => ({
   subtitle: {
     marginBottom: "1em",
   },
+  icon: {
+    marginLeft: "2em",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: 0,
+    },
+  },
 }));
 
 function LandingPage() {
   const classes = useStyles();
   const theme = useTheme();
+
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const defaultOptions = {
     loop: true,
@@ -125,9 +145,19 @@ function LandingPage() {
       </Grid>
       <Grid item>
         {" "}
-        {/*----- Services Block -----*/}
-        <Grid container>
-          <Grid item>
+        {/*----- Software Block -----*/}
+        <Grid
+          container
+          className={classes.serviceContainer}
+          justifyContent={matchesSM && "center"}
+        >
+          <Grid
+            item
+            style={{
+              marginLeft: !matchesSM && "5em",
+              textAlign: matchesSM && "center",
+            }}
+          >
             <Typography variant="h4">Software Development</Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Save Energy. Save Time. Save Money.
@@ -146,7 +176,95 @@ function LandingPage() {
             </Button>
           </Grid>
           <Grid item>
-            <img src={customSoftwareIcon} alt="Software Development Icon" />
+            <img
+              className={classes.icon}
+              src={softwareIcon}
+              alt="Software Development Icon"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        {" "}
+        {/*----- Mobile App Block -----*/}
+        <Grid
+          container
+          className={classes.serviceContainer}
+          justifyContent={matchesSM ? "center" : "flex-end"}
+        >
+          <Grid
+            item
+            style={{
+              textAlign: matchesSM && "center",
+            }}
+          >
+            <Typography variant="h4">Mobile App Development</Typography>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Extend Service. Extend Access. Engage Users.
+            </Typography>
+            <Typography variant="subtitle1">
+              Integrate your web experience or create a standalone app.
+            </Typography>
+            <Button className={classes.learnButton} variant="outlined">
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow
+                width={10}
+                height={10}
+                fill={theme.palette.common.blue}
+              />
+            </Button>
+          </Grid>
+          <Grid
+            item
+            style={{
+              marginRight: !matchesSM && "5em",
+            }}
+          >
+            <img
+              className={classes.icon}
+              src={mobileAppIcon}
+              alt="Mobile App Development Icon"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        {" "}
+        {/*----- Website Block -----*/}
+        <Grid
+          container
+          className={classes.serviceContainer}
+          justifyContent={matchesSM && "center"}
+        >
+          <Grid
+            item
+            style={{
+              marginLeft: !matchesSM && "5em",
+              textAlign: matchesSM && "center",
+            }}
+          >
+            <Typography variant="h4">Website Development</Typography>
+            <Typography variant="subtitle1" className={classes.subtitle}>
+              Reach More. Discover More. Sell More.
+            </Typography>
+            <Typography variant="subtitle1">
+              Optimized websites for search engines, built for speed.
+            </Typography>
+            <Button className={classes.learnButton} variant="outlined">
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow
+                width={10}
+                height={10}
+                fill={theme.palette.common.blue}
+              />
+            </Button>
+          </Grid>
+          <Grid item>
+            <img
+              className={classes.icon}
+              src={websiteIcon}
+              alt="Website Development Icon"
+            />
           </Grid>
         </Grid>
       </Grid>
