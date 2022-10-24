@@ -19,6 +19,7 @@ import revolutionBackground from "../assets/repeatingBackground.svg";
 import informationBackground from "../assets/infoBackground.svg";
 
 import ButtonArrow from "./ui/ButtonArrow.js";
+import CallToAction from "./ui/CallToAction.js";
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -141,8 +142,7 @@ function LandingPage() {
   return (
     <Grid container className={classes.mainContainer} direction="column">
       <Grid item>
-        {" "}
-        {/*----- Hero Block -----*/}
+        {/*----- Hero Intro Block -----*/}
         <Grid container justifyContent="flex-end" alignItems="center">
           <Grid sm item className={classes.heroTextContainer}>
             <Typography variant="h2" align="center">
@@ -366,11 +366,7 @@ function LandingPage() {
                 <Typography variant="h2" style={{ color: "white" }}>
                   About Us
                 </Typography>
-                <Typography
-                  variant="subtitle1"
-                  style={{ color: "white" }}
-                  gutterBottom
-                >
+                <Typography variant="subtitle2" gutterBottom>
                   Let's get personal!
                 </Typography>
                 <Grid item>
@@ -397,11 +393,7 @@ function LandingPage() {
                 <Typography variant="h2" style={{ color: "white" }}>
                   Contact Us
                 </Typography>
-                <Typography
-                  variant="subtitle1"
-                  style={{ color: "white" }}
-                  gutterBottom
-                >
+                <Typography variant="subtitle2" gutterBottom>
                   Come and say hello!
                 </Typography>
                 <Grid item>
@@ -419,6 +411,10 @@ function LandingPage() {
           </Grid>
           <div className={classes.informationBackground} />
         </Grid>
+      </Grid>
+      <Grid item>
+        {/*----- Action Call Block -----*/}
+        <CallToAction />
       </Grid>
     </Grid>
   );
