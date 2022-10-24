@@ -16,6 +16,7 @@ import softwareIcon from "../assets/customSoftwareIcon.svg";
 import mobileAppIcon from "../assets/mobileIcon.svg";
 import websiteIcon from "../assets/websiteIcon.svg";
 import revolutionBackground from "../assets/repeatingBackground.svg";
+import informationBackground from "../assets/infoBackground.svg";
 
 import ButtonArrow from "./ui/ButtonArrow.js";
 
@@ -111,6 +112,14 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  informationBackground: {
+    backgroundImage: `url(${informationBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
 }));
 
 function LandingPage() {
@@ -118,6 +127,7 @@ function LandingPage() {
   const theme = useTheme();
 
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const defaultOptions = {
     loop: true,
@@ -168,7 +178,6 @@ function LandingPage() {
         </Grid>
       </Grid>
       <Grid item>
-        {" "}
         {/*----- Software Block -----*/}
         <Grid
           container
@@ -209,7 +218,6 @@ function LandingPage() {
         </Grid>
       </Grid>
       <Grid item>
-        {" "}
         {/*----- Mobile App Block -----*/}
         <Grid
           container
@@ -253,7 +261,6 @@ function LandingPage() {
         </Grid>
       </Grid>
       <Grid item>
-        {" "}
         {/*----- Website Block -----*/}
         <Grid
           container
@@ -272,7 +279,7 @@ function LandingPage() {
               Reach More. Discover More. Sell More.
             </Typography>
             <Typography variant="subtitle1">
-              Optimized websites for search engines, built for speed.
+              Optimized websites for search engines , built for speed.
             </Typography>
             <Button className={classes.learnButton} variant="outlined">
               <span style={{ marginRight: 10 }}>Learn More</span>
@@ -293,6 +300,7 @@ function LandingPage() {
         </Grid>
       </Grid>
       <Grid item>
+        {/*----- Revolution Block -----*/}
         <Grid
           container
           alignItems="center"
@@ -332,6 +340,84 @@ function LandingPage() {
             </CardContent>
           </Card>
           <div className={classes.revolutionBackground} />
+        </Grid>
+      </Grid>
+      <Grid item>
+        {/*----- Information Block -----*/}
+        <Grid container alignItems="center" style={{ height: "80em" }}>
+          <Grid
+            item
+            container
+            direction={matchesXS ? "column" : "row"}
+            style={{
+              position: "absolute",
+            }}
+            spacing={matchesXS ? 10 : 0}
+          >
+            <Grid
+              item
+              sm
+              style={{
+                marginLeft: matchesXS ? 0 : matchesSM ? "2em" : "5em",
+                textAlign: matchesXS ? "center" : "left",
+              }}
+            >
+              <Grid container direction="column">
+                <Typography variant="h2" style={{ color: "white" }}>
+                  About Us
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: "white" }}
+                  gutterBottom
+                >
+                  Let's get personal!
+                </Typography>
+                <Grid item>
+                  <Button
+                    className={classes.learnButton}
+                    variant="outlined"
+                    style={{ color: "white", borderColor: "white" }}
+                  >
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={10} height={10} fill="white" />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              sm
+              style={{
+                marginRight: matchesXS ? 0 : matchesSM ? "2em" : "5em",
+                textAlign: matchesXS ? "center" : "right",
+              }}
+            >
+              <Grid container direction="column">
+                <Typography variant="h2" style={{ color: "white" }}>
+                  Contact Us
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  style={{ color: "white" }}
+                  gutterBottom
+                >
+                  Come and say hello!
+                </Typography>
+                <Grid item>
+                  <Button
+                    className={classes.learnButton}
+                    variant="outlined"
+                    style={{ color: "white", borderColor: "white" }}
+                  >
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={10} height={10} fill="white" />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <div className={classes.informationBackground} />
         </Grid>
       </Grid>
     </Grid>
