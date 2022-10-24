@@ -105,6 +105,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[10],
     borderRadius: 15,
     padding: "10em",
+    [theme.breakpoints.down("sm")]: {
+      padding: "8em 0",
+      borderRadius: 0,
+      width: "100%",
+    },
   },
 }));
 
@@ -292,7 +297,7 @@ function LandingPage() {
           container
           alignItems="center"
           justifyContent="center"
-          style={{ height: "100em" }}
+          style={{ height: "100em", marginTop: "12em" }}
         >
           <Card className={classes.revolutionCard}>
             <CardContent>
@@ -302,10 +307,12 @@ function LandingPage() {
                 style={{ textAlign: "center" }}
               >
                 <Grid item>
-                  <Typography variant="h3">The Revolution</Typography>
+                  <Typography variant="h3" gutterBottom>
+                    The Revolution
+                  </Typography>
                 </Grid>
                 <Grid item>
-                  <Typography variant="subtitle1">
+                  <Typography variant="subtitle1" gutterBottom>
                     Visionary insights coupled with cutting-edge technology is a
                     recipe for revolution.
                   </Typography>
