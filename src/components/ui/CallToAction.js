@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -40,10 +41,13 @@ const useStyles = makeStyles((theme) => ({
     width: 205,
     backgroundColor: theme.palette.common.orange,
     fontSize: "1.5rem",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+    },
   },
 }));
 
-function CallToAction() {
+function CallToAction({ setTabValue }) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -83,7 +87,13 @@ function CallToAction() {
               container
               justifyContent={matchesSM ? "center" : undefined}
             >
-              <Button className={classes.learnButton} variant="outlined">
+              <Button
+                className={classes.learnButton}
+                variant="outlined"
+                component={Link}
+                to="/revolution"
+                onClick={() => setTabValue(2)}
+              >
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
                   width={10}
@@ -96,7 +106,13 @@ function CallToAction() {
         </Grid>
       </Grid>
       <Grid item style={{ marginRight: matchesSM ? 0 : "5em" }}>
-        <Button variant="contained" className={classes.estimateButton}>
+        <Button
+          variant="contained"
+          className={classes.estimateButton}
+          component={Link}
+          to="/estimate"
+          onClick={() => setTabValue(5)}
+        >
           Free Estimate
         </Button>
       </Grid>

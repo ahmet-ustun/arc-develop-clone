@@ -7,6 +7,7 @@ import Theme from "./ui/Theme.js";
 import Header from "./ui/Header.js";
 import Footer from "./ui/Footer.js";
 import LandingPage from "./LandingPage.js";
+import Services from "./Services.js";
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
@@ -22,11 +23,27 @@ function App() {
           setItemIndex={setItemIndex}
         />
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <LandingPage
+                {...props}
+                setTabValue={setTabValue}
+                setItemIndex={setItemIndex}
+              />
+            )}
+          />
           <Route
             exact
             path="/services"
-            component={() => <div>/services</div>}
+            render={(props) => (
+              <Services
+                {...props}
+                setTabValue={setTabValue}
+                setItemIndex={setItemIndex}
+              />
+            )}
           />
           <Route
             exact
@@ -56,10 +73,7 @@ function App() {
             component={() => <div>/estimate</div>}
           />
         </Switch>
-        <Footer
-          setTabValue={setTabValue}
-          setItemIndex={setItemIndex}
-        />
+        <Footer setTabValue={setTabValue} setItemIndex={setItemIndex} />
       </BrowserRouter>
     </ThemeProvider>
   );

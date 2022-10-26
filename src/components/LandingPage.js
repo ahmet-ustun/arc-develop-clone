@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -123,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LandingPage() {
+function LandingPage({ setTabValue, setItemIndex }) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -156,12 +157,24 @@ function LandingPage() {
               justifyContent="center"
             >
               <Grid item>
-                <Button className={classes.estimateButton} variant="contained">
+                <Button
+                  className={classes.estimateButton}
+                  variant="contained"
+                  component={Link}
+                  to="/estimate"
+                  onClick={() => setTabValue(5)}
+                >
                   Free Estimate
                 </Button>
               </Grid>
               <Grid item>
-                <Button className={classes.learnButtonHero} variant="outlined">
+                <Button
+                  className={classes.learnButtonHero}
+                  variant="outlined"
+                  component={Link}
+                  to="/revolution"
+                  onClick={() => setTabValue(2)}
+                >
                   <span style={{ marginRight: 10 }}>Learn More</span>
                   <ButtonArrow
                     width={15}
@@ -201,7 +214,16 @@ function LandingPage() {
               Complete digital solutions, from investigation to{" "}
               <span className={classes.specialText}>celebration</span>.
             </Typography>
-            <Button className={classes.learnButton} variant="outlined">
+            <Button
+              className={classes.learnButton}
+              variant="outlined"
+              component={Link}
+              to="/services/software"
+              onClick={() => {
+                setTabValue(1);
+                setItemIndex(1);
+              }}
+            >
               <span style={{ marginRight: 10 }}>Learn More</span>
               <ButtonArrow
                 width={10}
@@ -241,7 +263,16 @@ function LandingPage() {
             <Typography variant="subtitle1" gutterBottom>
               Integrate your web experience or create a standalone app.
             </Typography>
-            <Button className={classes.learnButton} variant="outlined">
+            <Button
+              className={classes.learnButton}
+              variant="outlined"
+              component={Link}
+              to="/services/mobile"
+              onClick={() => {
+                setTabValue(1);
+                setItemIndex(2);
+              }}
+            >
               <span style={{ marginRight: 10 }}>Learn More</span>
               <ButtonArrow
                 width={10}
@@ -287,7 +318,16 @@ function LandingPage() {
             <Typography variant="subtitle1" gutterBottom>
               Optimized websites for search engines , built for speed.
             </Typography>
-            <Button className={classes.learnButton} variant="outlined">
+            <Button
+              className={classes.learnButton}
+              variant="outlined"
+              component={Link}
+              to="/services/website"
+              onClick={() => {
+                setTabValue(1);
+                setItemIndex(3);
+              }}
+            >
               <span style={{ marginRight: 10 }}>Learn More</span>
               <ButtonArrow
                 width={10}
@@ -333,6 +373,9 @@ function LandingPage() {
                   <Button
                     className={classes.learnButtonHero}
                     variant="outlined"
+                    component={Link}
+                    to="/revolution"
+                    onClick={() => setTabValue(2)}
                   >
                     <span style={{ marginRight: 10 }}>Learn More</span>
                     <ButtonArrow
@@ -358,7 +401,6 @@ function LandingPage() {
             style={{
               position: "absolute",
             }}
-            spacing={matchesXS ? 10 : 0}
           >
             <Grid
               item
@@ -368,7 +410,11 @@ function LandingPage() {
                 textAlign: matchesXS ? "center" : "left",
               }}
             >
-              <Grid container direction="column">
+              <Grid
+                container
+                direction="column"
+                style={{ marginBottom: matchesXS ? "10em" : 0 }}
+              >
                 <Typography variant="h2" style={{ color: "white" }}>
                   About Us
                 </Typography>
@@ -380,6 +426,9 @@ function LandingPage() {
                     className={classes.learnButton}
                     variant="outlined"
                     style={{ color: "white", borderColor: "white" }}
+                    component={Link}
+                    to="/about"
+                    onClick={() => setTabValue(3)}
                   >
                     <span style={{ marginRight: 10 }}>Learn More</span>
                     <ButtonArrow width={10} height={10} fill="white" />
@@ -407,6 +456,9 @@ function LandingPage() {
                     className={classes.learnButton}
                     variant="outlined"
                     style={{ color: "white", borderColor: "white" }}
+                    component={Link}
+                    to="/contact"
+                    onClick={() => setTabValue(4)}
                   >
                     <span style={{ marginRight: 10 }}>Learn More</span>
                     <ButtonArrow width={10} height={10} fill="white" />
@@ -420,7 +472,7 @@ function LandingPage() {
       </Grid>
       <Grid item>
         {/*----- Action Call Block -----*/}
-        <CallToAction />
+        <CallToAction setTabValue={setTabValue} />
       </Grid>
     </Grid>
   );
