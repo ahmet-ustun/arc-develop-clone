@@ -1,6 +1,7 @@
 import React from "react";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${desktopBackground})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
+    backgroundAttachment: "fixed",
     backgroundRepeat: "no-repeat",
     height: "60em",
     width: "100%",
@@ -45,14 +47,23 @@ function CallToAction() {
   const classes = useStyles();
   const theme = useTheme();
 
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Grid
       container
       className={classes.background}
       alignItems="center"
-      justifyContent="space-between"
+      justifyContent={matchesSM ? "center" : "space-between"}
+      direction={matchesSM ? "column" : "row"}
     >
-      <Grid item style={{ marginLeft: "5em" }}>
+      <Grid
+        item
+        style={{
+          marginLeft: matchesSM ? 0 : "5em",
+          textAlign: matchesSM ? "center" : "inherit",
+        }}
+      >
         <Grid container direction="column">
           <Grid item>
             <Typography variant="h2">
@@ -67,7 +78,11 @@ function CallToAction() {
             >
               Take advantage of the 21st century.
             </Typography>
-            <Grid item container>
+            <Grid
+              item
+              container
+              justifyContent={matchesSM ? "center" : undefined}
+            >
               <Button className={classes.learnButton} variant="outlined">
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
@@ -80,7 +95,7 @@ function CallToAction() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item style={{ marginRight: "5em" }}>
+      <Grid item style={{ marginRight: matchesSM ? 0 : "5em" }}>
         <Button variant="contained" className={classes.estimateButton}>
           Free Estimate
         </Button>

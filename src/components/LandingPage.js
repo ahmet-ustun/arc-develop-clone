@@ -1,8 +1,8 @@
 import React from "react";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
-
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -191,11 +191,13 @@ function LandingPage() {
               textAlign: matchesSM && "center",
             }}
           >
-            <Typography variant="h4">Software Development</Typography>
+            <Typography variant="h4" gutterBottom>
+              Software Development
+            </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Save Energy. Save Time. Save Money.
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" gutterBottom>
               Complete digital solutions, from investigation to{" "}
               <span className={classes.specialText}>celebration</span>.
             </Typography>
@@ -230,11 +232,13 @@ function LandingPage() {
               textAlign: matchesSM && "center",
             }}
           >
-            <Typography variant="h4">Mobile App Development</Typography>
+            <Typography variant="h4" gutterBottom>
+              Mobile App Development
+            </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Extend Service. Extend Access. Engage Users.
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" gutterBottom>
               Integrate your web experience or create a standalone app.
             </Typography>
             <Button className={classes.learnButton} variant="outlined">
@@ -274,11 +278,13 @@ function LandingPage() {
               textAlign: matchesSM && "center",
             }}
           >
-            <Typography variant="h4">Website Development</Typography>
+            <Typography variant="h4" gutterBottom>
+              Website Development
+            </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
               Reach More. Discover More. Sell More.
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" gutterBottom>
               Optimized websites for search engines , built for speed.
             </Typography>
             <Button className={classes.learnButton} variant="outlined">
