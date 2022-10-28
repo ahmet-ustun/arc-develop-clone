@@ -8,6 +8,7 @@ import Header from "./ui/Header.js";
 import Footer from "./ui/Footer.js";
 import LandingPage from "./LandingPage.js";
 import Services from "./Services.js";
+import SoftwareDevelopment from "./SoftwareDevelopment.js";
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
@@ -48,7 +49,13 @@ function App() {
           <Route
             exact
             path="/services/software"
-            component={() => <div>/software</div>}
+            render={(props) => (
+              <SoftwareDevelopment
+                {...props}
+                setTabValue={setTabValue}
+                setItemIndex={setItemIndex}
+              />
+            )}
           />
           <Route
             exact
