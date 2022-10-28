@@ -84,12 +84,12 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     background: theme.palette.common.blue,
-    color: "white",
     borderRadius: 0,
   },
   menuItem: {
     ...theme.typography.tab,
     opacity: 0.7,
+    color: "white",
     "&:hover": {
       opacity: 1,
     },
