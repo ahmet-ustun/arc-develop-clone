@@ -49,7 +49,6 @@ function Services({ setTabValue, setItemIndex }) {
   const theme = useTheme();
 
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid container direction="column">
