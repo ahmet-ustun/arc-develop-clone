@@ -6,9 +6,13 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Theme from "./ui/Theme.js";
 import Header from "./ui/Header.js";
 import Footer from "./ui/Footer.js";
+
 import LandingPage from "./LandingPage.js";
 import Services from "./Services.js";
+
 import SoftwareDevelopment from "./SoftwareDevelopment.js";
+import MobileAppDevelopment from "./MobileAppDevelopment.js";
+import WebsiteDevelopment from "./WebsiteDevelopment.js";
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
@@ -60,12 +64,24 @@ function App() {
           <Route
             exact
             path="/services/mobile"
-            component={() => <div>/mobile</div>}
+            render={(props) => (
+              <MobileAppDevelopment
+                {...props}
+                setTabValue={setTabValue}
+                setItemIndex={setItemIndex}
+              />
+            )}
           />
           <Route
             exact
             path="/services/website"
-            component={() => <div>/website</div>}
+            render={(props) => (
+              <WebsiteDevelopment
+                {...props}
+                setTabValue={setTabValue}
+                setItemIndex={setItemIndex}
+              />
+            )}
           />
           <Route
             exact
