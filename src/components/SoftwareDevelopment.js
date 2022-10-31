@@ -23,9 +23,16 @@ import stopwatch from "../assets/stopwatch.svg";
 import banknotes from "../assets/cash.svg";
 import treeRoots from "../assets/root.svg";
 
+import CallToAction from "./ui/CallToAction.js";
+
 const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    padding: "2em 5em 10em",
+  rowContainer: {
+    paddingLeft: "5em",
+    paddingRight: "5em",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "3em",
+      paddingRight: "3em",
+    },
   },
   heading: {
     maxWidth: "40em",
@@ -82,8 +89,14 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
   };
 
   return (
-    <Grid container className={classes.mainContainer} direction="column">
-      <Grid item container justifyContent={matchesMD && "center"}>
+    <Grid container direction="column">
+      <Grid
+        item
+        container
+        className={classes.rowContainer}
+        justifyContent={matchesMD && "center"}
+        style={{ marginTop: "2em" }}
+      >
         <Hidden mdDown>
           <Grid
             item
@@ -164,7 +177,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
                 setItemIndex(2);
               }}
             >
-              <img src={nextArrow} alt="To Mobile App Development" />
+              <img src={nextArrow} alt="Forward to Mobile App Development" />
             </IconButton>
           </Grid>
         </Hidden>
@@ -172,6 +185,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
       <Grid
         item
         container
+        className={classes.rowContainer}
         justifyContent="center"
         style={{
           marginTop: "15em",
@@ -233,33 +247,51 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
       <Grid
         item
         container
+        className={classes.rowContainer}
         direction={matchesMD && "column"}
         alignItems={matchesMD && "center"}
         justifyContent="space-between"
       >
-        <Grid item container className={classes.itemContainer} md>
-          <Grid
-            item
-            container
-            direction="column"
-            style={{ marginBottom: matchesMD && "15em" }}
-            md
-          >
+        <Grid
+          item
+          container
+          className={classes.itemContainer}
+          style={{ marginBottom: matchesMD && "15em" }}
+          direction={matchesSM ? "column" : "row"}
+          md
+        >
+          <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                align={matchesSM ? "center" : "left"}
+                gutterBottom
+              >
                 Digital Documents
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 Reduce Errors. Reduce Waste. Reduce Costs.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 Billions are spent annually on the purchasing, printing, and
                 distribution of paper. On top of the massive environmental
                 impact this has, it causes harm to your bottom line as well.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 By utilizing digital forms and documents you can remove these
                 obsolete expenses, accelerate your communication, and help the
                 Earth.
@@ -273,7 +305,13 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
             />
           </Grid>
         </Grid>
-        <Grid item container className={classes.itemContainer} md>
+        <Grid
+          item
+          container
+          className={classes.itemContainer}
+          direction={matchesSM ? "column" : "row"}
+          md
+        >
           <Grid item md>
             <Lottie
               options={scalableOptions}
@@ -282,12 +320,20 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                align={matchesSM ? "center" : "left"}
+                gutterBottom
+              >
                 Scalable
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 Whether you’re a large brand, just getting started, or taking
                 off right now, our application architecture ensures pain-free
                 growth and reliability.
@@ -296,14 +342,19 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item container style={{ margin: "20em auto" }}>
+      <Grid
+        item
+        container
+        className={classes.rowContainer}
+        style={{ margin: "20em auto" }}
+      >
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <img
               src={treeRoots}
-              alt="Image of a Tree with Roots"
-              height="450em"
-              width="450em"
+              alt="Tree with Roots"
+              height={matchesSM ? "300em" : "450em"}
+              width={matchesSM ? "300em" : "450em"}
             />
           </Grid>
           <Grid item className={classes.itemContainer}>
@@ -324,33 +375,51 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
       <Grid
         item
         container
+        className={classes.rowContainer}
         direction={matchesMD && "column"}
         alignItems={matchesMD && "center"}
         justifyContent="space-between"
-        style={{ marginBottom: "10em" }}
+        style={{ marginBottom: "20em" }}
       >
         <Grid
           item
           container
           className={classes.itemContainer}
           style={{ marginBottom: matchesMD && "15em" }}
+          direction={matchesSM ? "column" : "row"}
           md
         >
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                align={matchesSM ? "center" : "left"}
+                gutterBottom
+              >
                 Automation
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 Why waste time when you don’t have to?
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 We can help you identify processes with time or event based
                 actions which can now easily be automated.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 Increasing efficiency increases profits, leaving you more time
                 to focus on your business, not busywork.
               </Typography>
@@ -363,7 +432,13 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
             />
           </Grid>
         </Grid>
-        <Grid item container className={classes.itemContainer} md>
+        <Grid
+          item
+          container
+          className={classes.itemContainer}
+          direction={matchesSM ? "column" : "row"}
+          md
+        >
           <Grid item md>
             <Lottie
               options={experienceOptions}
@@ -372,19 +447,35 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
           <Grid item container direction="column" md>
             <Grid item>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                align={matchesSM ? "center" : "left"}
+                gutterBottom
+              >
                 User Experience
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 A good design that isn’t usable isn’t a good design.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 So why are so many pieces of software complicated, confusing,
                 and frustrating?
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesSM ? "center" : "left"}
+                paragraph
+              >
                 By prioritizing users and the real ways they interact with
                 technology we’re able to develop unique, personable experiences
                 that solve problems rather than create new ones.
@@ -393,6 +484,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
         </Grid>
       </Grid>
+      <CallToAction setTabValue={setTabValue} />
     </Grid>
   );
 }
