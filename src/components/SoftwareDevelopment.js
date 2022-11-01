@@ -94,7 +94,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        justifyContent={matchesMD && "center"}
+        justify={matchesMD ? "center" : undefined}
         style={{ marginTop: "2em" }}
       >
         <Hidden mdDown>
@@ -484,7 +484,9 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
         </Grid>
       </Grid>
-      <CallToAction setTabValue={setTabValue} />
+      <Grid item>
+        <CallToAction setTabValue={setTabValue} />
+      </Grid>
     </Grid>
   );
 }

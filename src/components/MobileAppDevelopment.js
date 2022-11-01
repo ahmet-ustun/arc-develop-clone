@@ -61,7 +61,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        justifyContent={matchesMD && "center"}
+        justify={matchesMD ? "center" : undefined}
         style={{ marginTop: "2em" }}
       >
         <Hidden mdDown>
@@ -256,7 +256,9 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
         </Grid>
       </Grid>
-      <CallToAction setTabValue={setTabValue} />
+      <Grid item>
+        <CallToAction setTabValue={setTabValue} />
+      </Grid>
     </Grid>
   );
 }
