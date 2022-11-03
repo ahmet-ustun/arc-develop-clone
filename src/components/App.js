@@ -10,6 +10,7 @@ import Footer from "./ui/Footer.js";
 import LandingPage from "./LandingPage.js";
 import Services from "./Services.js";
 import Revolution from "./Revolution.js";
+import AboutUs from "./AboutUs.js";
 
 import SoftwareDevelopment from "./SoftwareDevelopment.js";
 import MobileAppDevelopment from "./MobileAppDevelopment.js";
@@ -88,13 +89,16 @@ function App() {
             exact
             path="/revolution"
             render={(props) => (
-              <Revolution
-                {...props}
-                setTabValue={setTabValue}
-              />
+              <Revolution {...props} setTabValue={setTabValue} />
             )}
           />
-          <Route exact path="/about" component={() => <div>/about</div>} />
+          <Route
+            exact
+            path="/about"
+            render={(props) => (
+              <AboutUs {...props} setTabValue={setTabValue} />
+            )}
+          />
           <Route exact path="/contact" component={() => <div>/contact</div>} />
           <Route
             exact
