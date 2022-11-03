@@ -56,7 +56,7 @@ function Services({ setTabValue, setItemIndex }) {
         item
         style={{
           marginLeft: matchesSM ? 0 : "5em",
-          marginTop: matchesSM ? "1em" : "2em",
+          marginTop: "2em",
         }}
       >
         <Typography

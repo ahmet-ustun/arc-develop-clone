@@ -65,9 +65,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       marginTop: "3em",
     },
-    [theme.breakpoints.down("xs")]: {
-      marginTop: "2em",
-    },
   },
   serviceContainer: {
     marginTop: "12em",
