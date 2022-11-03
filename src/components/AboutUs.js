@@ -5,16 +5,13 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import Hidden from "@material-ui/core/Hidden";
 
-import historyBook from "../assets/history.svg";
-// import consult from "../assets/consultationIcon.svg";
-// import mockup from "../assets/mockupIcon.svg";
-// import review from "../assets/reviewIcon.svg";
-// import design from "../assets/designIcon.svg";
-// import build from "../assets/buildIcon.svg";
-// import launch from "../assets/launchIcon.svg";
-// import maintain from "../assets/maintainIcon.svg";
-// import iterate from "../assets/iterateIcon.svg";
+import history from "../assets/history.svg";
+import profile from "../assets/founder.jpg";
+import yearbook from "../assets/yearbook.svg";
+import sterling from "../assets/puppy.svg";
 
 import CallToAction from "./ui/CallToAction.js";
 
@@ -34,21 +31,37 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "50em",
     lineHeight: 1.4,
   },
+  avatar: {
+    height: "25em",
+    width: "25em",
+    [theme.breakpoints.down("sm")]: {
+      height: "20em",
+      width: "20em",
+      maxHeight: 300,
+      maxWidth: 300,
+    },
+  },
 }));
 
 function AboutUs({ setTabValue }) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Grid container direction="column">
       <Grid item className={classes.rowContainer} style={{ marginTop: "2em" }}>
-        <Typography variant="h2">About Us</Typography>
+        <Typography variant="h2" align={matchesMD ? "center" : "left"}>
+          About Us
+        </Typography>
       </Grid>
       <Grid
         item
         container
         className={classes.rowContainer}
+        style={{ marginTop: "3em" }}
         justifyContent="center"
       >
         <Typography
@@ -67,6 +80,9 @@ function AboutUs({ setTabValue }) {
         item
         container
         className={classes.rowContainer}
+        style={{ marginTop: "10em" }}
+        direction={matchesMD ? "column" : "row"}
+        alignItems={matchesMD ? "center" : undefined}
         justifyContent="space-around"
       >
         <Grid item>
@@ -78,29 +94,46 @@ function AboutUs({ setTabValue }) {
             lg
           >
             <Grid item>
-              <Typography variant="h4" gutterBottom>
+              <Typography
+                variant="h4"
+                align={matchesMD ? "center" : "left"}
+                gutterBottom
+              >
                 History
               </Typography>
             </Grid>
             <Grid item>
               <Typography
                 variant="body1"
+                align={matchesMD ? "center" : "left"}
                 style={{ fontWeight: 700, fontStyle: "italic" }}
                 paragraph
               >
                 We're the new kid on the block
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesMD ? "center" : "left"}
+                paragraph
+              >
                 Founded in 2019, we’re ready to get our hands on the world’s
                 business problems.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesMD ? "center" : "left"}
+                paragraph
+              >
                 It all started with one question: Why aren’t all businesses
                 using available technology? There are many different answers to
                 that question: economic barriers, social barriers, educational
                 barriers, and sometimes institutional barriers.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesMD ? "center" : "left"}
+                paragraph
+              >
                 We aim to be a powerful force in overcoming these obstacles.
                 Recent developments in software engineering and computing power,
                 compounded by the proliferation of smart phones, has opened up
@@ -109,7 +142,11 @@ function AboutUs({ setTabValue }) {
                 completely new methods of interaction are created daily. Taking
                 full advantage of these advancements is the name of the game.
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography
+                variant="body1"
+                align={matchesMD ? "center" : "left"}
+                paragraph
+              >
                 All this change can be a lot to keep up with, and that’s where
                 we come in.
               </Typography>
@@ -119,12 +156,121 @@ function AboutUs({ setTabValue }) {
         <Grid item>
           <Grid item container justifyContent="center" lg>
             <img
-              src={historyBook}
+              src={history}
               alt="Quill Pen on Book"
-              style={{ maxHeight: "22em" }}
+              style={{ maxHeight: matchesSM ? 200 : "22em" }}
             />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        direction="column"
+        className={classes.rowContainer}
+        style={{ marginTop: "10em", marginBottom: "15em" }}
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography variant="h4" align="center" gutterBottom>
+            Team
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body1" align="center" paragraph>
+            Zachary Reece, Founder
+          </Typography>
+          <Typography variant="body1" align="center" paragraph>
+            I started coding when I was 9 years old.
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Avatar
+            src={profile}
+            alt="Zachary Reece"
+            className={classes.avatar}
+          />
+        </Grid>
+        <Grid item container justifyContent={matchesMD ? "center" : undefined}>
+          <Hidden lgUp>
+            <Grid item style={{ maxWidth: "45em", padding: "1.25em" }} lg>
+              <Typography variant="body1" align="center" paragraph>
+                I taught myself basic coding from a library book in third grade,
+                and ever since then my passion has solely been set on learning —
+                learning about computers, learning mathematics and philosophy,
+                studying design, always just learning.
+              </Typography>
+              <Typography variant="body1" align="center" paragraph>
+                Now I’m ready to apply everything I’ve learned, and to help
+                others with the intuition I have developed. I'm currently
+                teaching a course about building responsive modern user
+                interfaces on Udemy.com as well as beginning work on my first
+                machine learning mobile application.
+              </Typography>
+            </Grid>
+          </Hidden>
+          <Grid
+            item
+            container
+            direction="column"
+            alignItems={matchesMD ? "center" : undefined}
+            style={{ marginBottom: matchesMD && "2.5em" }}
+            lg
+          >
+            <Grid item>
+              <img
+                src={yearbook}
+                alt="Founder's Yearbook"
+                style={{ maxWidth: matchesSM && 300 }}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">
+                A page from my Sophomore yearbook
+              </Typography>
+            </Grid>
+          </Grid>
+          <Hidden mdDown>
+            <Grid item style={{ maxWidth: "45em", padding: "1.25em" }} lg>
+              <Typography variant="body1" align="center" paragraph>
+                I taught myself basic coding from a library book in third grade,
+                and ever since then my passion has solely been set on learning —
+                learning about computers, learning mathematics and philosophy,
+                studying design, always just learning.
+              </Typography>
+              <Typography variant="body1" align="center" paragraph>
+                Now I’m ready to apply everything I’ve learned, and to help
+                others with the intuition I have developed. I'm currently
+                teaching a course about building responsive modern user
+                interfaces on Udemy.com as well as beginning work on my first
+                machine learning mobile application.
+              </Typography>
+            </Grid>
+          </Hidden>
+          <Grid
+            item
+            container
+            direction="column"
+            alignItems={matchesMD ? "center" : "flex-end"}
+            lg
+          >
+            <Grid item>
+              <img
+                src={sterling}
+                alt="Founder's Puppy"
+                style={{ maxWidth: matchesSM && 300 }}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">
+                My little Dapple Dachshund, Sterling
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        <CallToAction setTabValue={setTabValue} />
       </Grid>
     </Grid>
   );
