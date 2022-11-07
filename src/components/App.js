@@ -11,6 +11,7 @@ import LandingPage from "./LandingPage.js";
 import Services from "./Services.js";
 import Revolution from "./Revolution.js";
 import AboutUs from "./AboutUs.js";
+import ContactUs from "./ContactUs.js";
 
 import SoftwareDevelopment from "./SoftwareDevelopment.js";
 import MobileAppDevelopment from "./MobileAppDevelopment.js";
@@ -95,11 +96,15 @@ function App() {
           <Route
             exact
             path="/about"
+            render={(props) => <AboutUs {...props} setTabValue={setTabValue} />}
+          />
+          <Route
+            exact
+            path="/contact"
             render={(props) => (
-              <AboutUs {...props} setTabValue={setTabValue} />
+              <ContactUs {...props} setTabValue={setTabValue} />
             )}
           />
-          <Route exact path="/contact" component={() => <div>/contact</div>} />
           <Route
             exact
             path="/estimate"
