@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 import background from "../assets/background.jpg";
+import mobileBack from "../assets/mobileBackground.jpg";
 import phoneIcon from "../assets/phone.svg";
 import emailIcon from "../assets/email.svg";
 import paperPlane from "../assets/send.svg";
@@ -17,26 +18,22 @@ import paperPlane from "../assets/send.svg";
 import ButtonArrow from "./ui/ButtonArrow.js";
 
 const useStyles = makeStyles((theme) => ({
-  rowContainer: {
-    paddingLeft: "5em",
-    paddingRight: "5em",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "3em",
-      paddingRight: "3em",
-    },
-  },
   background: {
     backgroundImage: `url(${background})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "60em",
+    paddingBottom: "10em",
+    [theme.breakpoints.down("md")]: {
+      backgroundImage: `url(${mobileBack})`,
+    },
   },
   learnButton: {
     ...theme.typography.learnButton,
     fontSize: "0.7rem",
     height: 35,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       marginBottom: "2em",
     },
   },
@@ -51,6 +48,22 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.light,
     },
   },
+  message: {
+    border: `2px solid ${theme.palette.common.blue}`,
+    borderRadius: 5,
+    marginTop: "5em",
+  },
+  sendButton: {
+    ...theme.typography.estimate,
+    borderRadius: 50,
+    height: 45,
+    width: 245,
+    fontSize: "1rem",
+    backgroundColor: theme.palette.common.orange,
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+    },
+  },
 }));
 
 function ContactUs({ setTabValue }) {
@@ -58,115 +71,189 @@ function ContactUs({ setTabValue }) {
   const theme = useTheme();
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
-  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const emailRegex = /^\S+@\S+\.\S+$/;
+  const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [text, setText] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [emailHelper, setEmailHelper] = useState("");
+
+  const [phone, setPhone] = useState("");
+  const [phoneHelper, setPhoneHelper] = useState("");
+
+
+  const handleChange = (event) => {
+    switch (event.target.id) {
+      case "email":
+        setEmail(event.target.value);
+        emailRegex.test(event.target.value)
+          ? setEmailHelper("")
+          : setEmailHelper("Invalid Email");
+        break;
+      case "phone":
+        setPhone(event.target.value);
+        phoneRegex.test(event.target.value)
+          ? setPhoneHelper("")
+          : setPhoneHelper("Invalid Phone");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Grid container direction="row">
-      <Grid item container direction="column" justifyContent="center" lg={3}>
+      <Grid
+        item
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        lg={4}
+        xl={3}
+        style={{
+          marginTop: matchesMD && "2em",
+          marginBottom: matchesMD && "2em",
+        }}
+      >
         <Grid item>
-          <Typography variant="h2" style={{ lineHeight: 1 }}>
-            Contact Us
-          </Typography>
-          <Typography
-            variant="body1"
-            style={{ color: theme.palette.common.blue }}
-          >
-            We're waiting.
-          </Typography>
-        </Grid>
-        <Grid item container>
-          <Grid item>
-            <img
-              src={phoneIcon}
-              alt="Phone Icon"
-              style={{ marginRight: "0.5em" }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="body1"
-              style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+          <Grid container direction="column">
+            <Grid item>
+              <Typography
+                variant="h2"
+                align={matchesMD ? "center" : undefined}
+                style={{ lineHeight: 1 }}
+              >
+                Contact Us
+              </Typography>
+              <Typography
+                variant="body1"
+                align={matchesMD ? "center" : undefined}
+                style={{ color: theme.palette.common.blue }}
+              >
+                We're waiting.
+              </Typography>
+            </Grid>
+            <Grid item container style={{ marginTop: "2em" }}>
+              <Grid item>
+                <img
+                  src={phoneIcon}
+                  alt="Phone Icon"
+                  style={{ marginRight: "0.5em" }}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+                >
+                  +359 88 233 0606
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container style={{ marginBottom: "2em" }}>
+              <Grid item>
+                <img
+                  src={emailIcon}
+                  alt="Email Icon"
+                  style={{ marginRight: "0.5em" }}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+                >
+                  ahmetustunt@gmail.com
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              container
+              direction="column"
+              spacing={1}
+              style={{ maxWidth: "20em" }}
             >
-              +359 88 233 0606
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item container>
-          <Grid item>
-            <img
-              src={emailIcon}
-              alt="Email Icon"
-              style={{ marginRight: "0.5em" }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="body1"
-              style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+              <Grid item>
+                <TextField
+                  id="name"
+                  label="Name"
+                  value={name}
+                  fullWidth
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="email"
+                  label="Email"
+                  value={email}
+                  error={!!emailHelper}
+                  helperText={emailHelper}
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  id="phone"
+                  label="Phone"
+                  value={phone}
+                  error={!!phoneHelper}
+                  helperText={phoneHelper}
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+            <Grid item style={{ maxWidth: "20em" }}>
+              <TextField
+                id="text"
+                className={classes.message}
+                value={text}
+                fullWidth
+                multiline
+                minRows={10}
+                InputProps={{ disableUnderline: true }}
+                onChange={(event) => setText(event.target.value)}
+              />
+            </Grid>
+            <Grid
+              item
+              container
+              justifyContent="center"
+              style={{ marginTop: "2em" }}
             >
-              ahmetustunt@gmail.com
-            </Typography>
+              <Button variant="contained" className={classes.sendButton}>
+                Send Message
+                <img
+                  src={paperPlane}
+                  alt="Paper Airplane"
+                  style={{ marginLeft: "0.5em" }}
+                />
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item container>
-          <Grid item>
-            <TextField
-              id="name"
-              label="Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="email"
-              label="Email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="phone"
-              label="Phone"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item>
-          <TextField
-            id="text"
-            value={text}
-            multiline
-            minRows={10}
-            onChange={(event) => setText(event.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="contained">
-            Send Message
-            <img src={paperPlane} alt="Paper Airplane" />
-          </Button>
         </Grid>
       </Grid>
       <Grid
         item
         container
         className={classes.background}
+        direction={matchesMD ? "column" : "row"}
         alignItems="center"
-        lg={9}
+        justifyContent={matchesMD ? "center" : "space-around"}
+        lg={8}
+        xl={9}
       >
         <Grid
           item
           style={{
-            marginLeft: matchesSM ? 0 : "5em",
-            textAlign: matchesSM ? "center" : "inherit",
+            textAlign: matchesMD ? "center" : "inherit",
           }}
         >
           <Grid container direction="column">
@@ -186,7 +273,7 @@ function ContactUs({ setTabValue }) {
               <Grid
                 item
                 container
-                justifyContent={matchesSM ? "center" : undefined}
+                justifyContent={matchesMD ? "center" : undefined}
               >
                 <Button
                   className={classes.learnButton}
@@ -206,7 +293,7 @@ function ContactUs({ setTabValue }) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item style={{ marginRight: matchesSM ? 0 : "5em" }}>
+        <Grid item>
           <Button
             variant="contained"
             className={classes.estimateButton}
