@@ -8,6 +8,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 
 import background from "../assets/background.jpg";
 import mobileBack from "../assets/mobileBackground.jpg";
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   message: {
     border: `2px solid ${theme.palette.common.blue}`,
     borderRadius: 5,
+    padding: "0 0.3em",
     marginTop: "5em",
   },
   sendButton: {
@@ -71,6 +74,8 @@ function ContactUs({ setTabValue }) {
   const theme = useTheme();
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const emailRegex = /^\S+@\S+\.\S+$/;
   const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
@@ -84,6 +89,7 @@ function ContactUs({ setTabValue }) {
   const [phone, setPhone] = useState("");
   const [phoneHelper, setPhoneHelper] = useState("");
 
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (event) => {
     switch (event.target.id) {
@@ -104,6 +110,14 @@ function ContactUs({ setTabValue }) {
     }
   };
 
+  const handleClick = (event) => {
+    setIsOpen(true);
+  };
+
+  const handleClose = (event) => {
+    setIsOpen(false);
+  };
+
   return (
     <Grid container direction="row">
       <Grid
@@ -120,7 +134,11 @@ function ContactUs({ setTabValue }) {
         }}
       >
         <Grid item>
-          <Grid container direction="column">
+          <Grid
+            container
+            direction="column"
+            style={{ width: matchesSM ? 295 : 345 }}
+          >
             <Grid item>
               <Typography
                 variant="h2"
@@ -150,7 +168,12 @@ function ContactUs({ setTabValue }) {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  +359 88 233 0606
+                  <a
+                    href="tel:+359 88 233 0606"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    +359 88 233 0606
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -167,17 +190,16 @@ function ContactUs({ setTabValue }) {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  ahmetustunt@gmail.com
+                  <a
+                    href="mailto:ahmetustunt@gmail.com"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    ahmetustunt@gmail.com
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
-            <Grid
-              item
-              container
-              direction="column"
-              spacing={1}
-              style={{ maxWidth: "20em" }}
-            >
+            <Grid item container direction="column" spacing={1}>
               <Grid item>
                 <TextField
                   id="name"
@@ -210,7 +232,7 @@ function ContactUs({ setTabValue }) {
                 />
               </Grid>
             </Grid>
-            <Grid item style={{ maxWidth: "20em" }}>
+            <Grid item style={{ width: "96.5%" }}>
               <TextField
                 id="text"
                 className={classes.message}
@@ -228,7 +250,19 @@ function ContactUs({ setTabValue }) {
               justifyContent="center"
               style={{ marginTop: "2em" }}
             >
-              <Button variant="contained" className={classes.sendButton}>
+              <Button
+                disabled={
+                  !name ||
+                  !email ||
+                  !phone ||
+                  !text ||
+                  !!emailHelper ||
+                  !!phoneHelper
+                }
+                variant="contained"
+                className={classes.sendButton}
+                onClick={handleClick}
+              >
                 Send Message
                 <img
                   src={paperPlane}
@@ -240,6 +274,107 @@ function ContactUs({ setTabValue }) {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={isOpen}
+        style={{ zIndex: 1310 }}
+        fullScreen={matchesXS}
+        onClose={handleClose}
+      >
+        <DialogContent>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography variant="h4" align="center" gutterBottom>
+                Confirm Message
+              </Typography>
+            </Grid>
+            <Grid item style={{ marginBottom: "0.5em" }}>
+              <TextField
+                id="name"
+                label="Name"
+                style={{ borderBottom: "2px solid #97A2AA" }}
+                value={name}
+                disabled
+                fullWidth
+                InputProps={{ disableUnderline: true }}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </Grid>
+            <Grid item style={{ marginBottom: "0.5em" }}>
+              <TextField
+                id="email"
+                label="Email"
+                style={{ borderBottom: "2px solid #97A2AA" }}
+                value={email}
+                error={!!emailHelper}
+                helperText={emailHelper}
+                disabled
+                fullWidth
+                InputProps={{ disableUnderline: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id="phone"
+                label="Phone"
+                style={{ borderBottom: "2px solid #97A2AA" }}
+                value={phone}
+                error={!!phoneHelper}
+                helperText={phoneHelper}
+                disabled
+                fullWidth
+                InputProps={{ disableUnderline: true }}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid item style={{ width: "96.5%" }}>
+            <TextField
+              id="text"
+              className={classes.message}
+              style={{ borderColor: "#97A2AA" }}
+              value={text}
+              disabled
+              fullWidth
+              multiline
+              minRows={10}
+              InputProps={{ disableUnderline: true }}
+              onChange={(event) => setText(event.target.value)}
+            />
+          </Grid>
+          <Grid
+            item
+            container
+            style={{
+              margin: "2em auto 0.8em",
+              width: matchesSM ? 295 : 345,
+            }}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Grid item>
+              <Button color="primary" onClick={handleClose}>
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                className={classes.sendButton}
+                style={{ width: 145 }}
+                // onClick={handleClick}
+              >
+                Confirm
+                <img
+                  src={paperPlane}
+                  alt="Paper Airplane"
+                  style={{ marginLeft: "0.5em" }}
+                />
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
       <Grid
         item
         container
