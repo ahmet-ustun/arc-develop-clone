@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -10,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import background from "../assets/background.jpg";
 import mobileBack from "../assets/mobileBackground.jpg";
@@ -90,6 +93,31 @@ function ContactUs({ setTabValue }) {
   const [phoneHelper, setPhoneHelper] = useState("");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    color: "",
+  });
+
+  const clearInformation = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setText("");
+  };
+
+  const renderButton = (text) => (
+    <>
+      {text}
+      <img
+        src={paperPlane}
+        alt="Paper Airplane"
+        style={{ marginLeft: "0.5em" }}
+      />
+    </>
+  );
 
   const handleChange = (event) => {
     switch (event.target.id) {
@@ -110,12 +138,38 @@ function ContactUs({ setTabValue }) {
     }
   };
 
-  const handleClick = (event) => {
-    setIsOpen(true);
-  };
-
-  const handleClose = (event) => {
-    setIsOpen(false);
+  const handleConfirm = () => {
+    setIsLoading(true);
+    axios
+      .get(
+        "https://us-central1-arc-development-0.cloudfunctions.net/sendMail",
+        {
+          params: {
+            name,
+            email,
+            phone,
+            text,
+          },
+        }
+      )
+      .then((response) => {
+        setIsOpen(false);
+        setIsLoading(false);
+        clearInformation();
+        setAlert({
+          open: true,
+          message: "Message sent successfully 🎉",
+          color: "#4BB543",
+        });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setAlert({
+          open: true,
+          message: "An error occurred, try again",
+          color: "#FF3232",
+        });
+      });
   };
 
   return (
@@ -261,14 +315,9 @@ function ContactUs({ setTabValue }) {
                 }
                 variant="contained"
                 className={classes.sendButton}
-                onClick={handleClick}
+                onClick={() => setIsOpen(true)}
               >
-                Send Message
-                <img
-                  src={paperPlane}
-                  alt="Paper Airplane"
-                  style={{ marginLeft: "0.5em" }}
-                />
+                {renderButton("Send Message")}
               </Button>
             </Grid>
           </Grid>
@@ -278,7 +327,7 @@ function ContactUs({ setTabValue }) {
         open={isOpen}
         style={{ zIndex: 1310 }}
         fullScreen={matchesXS}
-        onClose={handleClose}
+        onClose={() => setIsOpen(false)}
       >
         <DialogContent>
           <Grid container direction="column">
@@ -353,7 +402,7 @@ function ContactUs({ setTabValue }) {
             justifyContent="space-between"
           >
             <Grid item>
-              <Button color="primary" onClick={handleClose}>
+              <Button color="primary" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
             </Grid>
@@ -362,19 +411,33 @@ function ContactUs({ setTabValue }) {
                 variant="contained"
                 className={classes.sendButton}
                 style={{ width: 145 }}
-                // onClick={handleClick}
+                disabled={isLoading}
+                onClick={handleConfirm}
               >
-                Confirm
-                <img
-                  src={paperPlane}
-                  alt="Paper Airplane"
-                  style={{ marginLeft: "0.5em" }}
-                />
+                {isLoading ? (
+                  <CircularProgress size={30} />
+                ) : (
+                  renderButton("Confirm")
+                )}
               </Button>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={3000}
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.color,
+            display: "block",
+            textAlign: "center",
+          },
+        }}
+        onClose={() => setAlert({ open: false, message: "", color: "" })}
+      />
       <Grid
         item
         container
