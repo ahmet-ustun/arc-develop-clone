@@ -12,6 +12,7 @@ import Services from "./Services.js";
 import Revolution from "./Revolution.js";
 import AboutUs from "./AboutUs.js";
 import ContactUs from "./ContactUs.js";
+import FreeEstimate from "./FreeEstimate.js";
 
 import SoftwareDevelopment from "./SoftwareDevelopment.js";
 import MobileAppDevelopment from "./MobileAppDevelopment.js";
@@ -108,7 +109,7 @@ function App() {
           <Route
             exact
             path="/estimate"
-            component={() => <div>/estimate</div>}
+            render={(props) => <FreeEstimate {...props} />}
           />
         </Switch>
         <Footer setTabValue={setTabValue} setItemIndex={setItemIndex} />
