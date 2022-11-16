@@ -48,6 +48,12 @@ export default createTheme({
       fontWeight: 700,
       color: arcBlue,
     },
+    h6: {
+      fontFamily: "Raleway",
+      fontWeight: 500,
+      color: arcBlue,
+      lineHeight: 1.2
+    },
     subtitle1: {
       fontSize: "1.25rem",
       fontWeight: 300,
