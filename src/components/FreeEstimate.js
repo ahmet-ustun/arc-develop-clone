@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { cloneDeep } from "lodash";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -30,7 +31,7 @@ import persons from "../assets/persons.svg";
 import info from "../assets/info.svg";
 import bell from "../assets/bell.svg";
 import people from "../assets/people.svg";
-import usersIcon from "../assets/users.svg";
+import users from "../assets/users.svg";
 import iPhone from "../assets/iphone.svg";
 import gps from "../assets/gps.svg";
 import customized from "../assets/customized.svg";
@@ -99,6 +100,224 @@ const defaultQuestions = [
   },
 ];
 
+const softwareQuestions = [
+  { ...defaultQuestions[0], active: false },
+  {
+    id: 2,
+    title: "Which platforms do you need supported?",
+    subtitle: "Select all that apply.",
+    options: [
+      {
+        id: 1,
+        title: "Web Application",
+        subtitle: null,
+        icon: website,
+        iconAlt: "computer outline",
+        selected: false,
+        cost: 100,
+      },
+      {
+        id: 2,
+        title: "iOS Application",
+        subtitle: null,
+        icon: iPhone,
+        iconAlt: "outline of iphone",
+        selected: false,
+        cost: 100,
+      },
+      {
+        id: 3,
+        title: "Android Application",
+        subtitle: null,
+        icon: android,
+        iconAlt: "outlines of android phone",
+        selected: false,
+        cost: 100,
+      },
+    ],
+    active: true,
+  },
+  {
+    id: 3,
+    title: "Which features do you expect to use?",
+    subtitle: "Select all that apply.",
+    options: [
+      {
+        id: 1,
+        title: "Photo/Video",
+        subtitle: null,
+        icon: camera,
+        iconAlt: "camera outline",
+        selected: false,
+        cost: 25,
+      },
+      {
+        id: 2,
+        title: "GPS",
+        subtitle: null,
+        icon: gps,
+        iconAlt: "gps pin",
+        selected: false,
+        cost: 25,
+      },
+      {
+        id: 3,
+        title: "File Transfer",
+        subtitle: null,
+        icon: upload,
+        iconAlt: "outline of cloud with arrow pointing up",
+        selected: false,
+        cost: 25,
+      },
+    ],
+    active: false,
+  },
+  {
+    id: 4,
+    title: "Which features do you expect to use?",
+    subtitle: "Select all that apply.",
+    options: [
+      {
+        id: 1,
+        title: "Users/Authentication",
+        subtitle: null,
+        icon: users,
+        iconAlt: "outline of a person with a plus sign",
+        selected: false,
+        cost: 25,
+      },
+      {
+        id: 2,
+        title: "Biometrics",
+        subtitle: null,
+        icon: biometrics,
+        iconAlt: "fingerprint",
+        selected: false,
+        cost: 25,
+      },
+      {
+        id: 3,
+        title: "Push Notifications",
+        subtitle: null,
+        icon: bell,
+        iconAlt: "outline of a bell",
+        selected: false,
+        cost: 25,
+      },
+    ],
+    active: false,
+  },
+  {
+    id: 5,
+    title: "What type of custom features do you expect to need?",
+    subtitle: "Select one.",
+    options: [
+      {
+        id: 1,
+        title: "Low Complexity",
+        subtitle: null,
+        icon: info,
+        iconAlt: "'i' inside a circle",
+        selected: false,
+        cost: 25,
+      },
+      {
+        id: 2,
+        title: "Medium Complexity",
+        subtitle: null,
+        icon: customized,
+        iconAlt: "two toggle switches",
+        selected: false,
+        cost: 50,
+      },
+      {
+        id: 3,
+        title: "High Complexity",
+        subtitle: null,
+        icon: data,
+        iconAlt: "outline of line graph",
+        selected: false,
+        cost: 100,
+      },
+    ],
+    active: false,
+  },
+  {
+    id: 6,
+    title: "How many users do you expect?",
+    subtitle: "Select one.",
+    options: [
+      {
+        id: 1,
+        title: "0-10",
+        subtitle: null,
+        icon: person,
+        iconAlt: "person outline",
+        selected: false,
+        cost: 1,
+      },
+      {
+        id: 2,
+        title: "10-100",
+        subtitle: null,
+        icon: persons,
+        iconAlt: "outline of two people",
+        selected: false,
+        cost: 1.25,
+      },
+      {
+        id: 3,
+        title: "100+",
+        subtitle: null,
+        icon: people,
+        iconAlt: "outline of three people",
+        selected: false,
+        cost: 1.5,
+      },
+    ],
+    active: false,
+  },
+];
+
+const websiteQuestions = [
+  { ...defaultQuestions[0], active: false },
+  {
+    id: 2,
+    title: "Which type of website are you wanting?",
+    subtitle: "Select one.",
+    options: [
+      {
+        id: 1,
+        title: "Basic",
+        subtitle: "(Informational)",
+        icon: info,
+        iconAlt: "person outline",
+        selected: false,
+        cost: 100,
+      },
+      {
+        id: 2,
+        title: "Interactive",
+        subtitle: "(Users, API's, Messaging)",
+        icon: customized,
+        iconAlt: "outline of two people",
+        selected: false,
+        cost: 200,
+      },
+      {
+        id: 3,
+        title: "E-Commerce",
+        subtitle: "(Sales)",
+        icon: globe,
+        iconAlt: "outline of three people",
+        selected: false,
+        cost: 250,
+      },
+    ],
+    active: true,
+  },
+];
+
 function FreeEstimate() {
   const classes = useStyles();
   const theme = useTheme();
@@ -107,6 +326,8 @@ function FreeEstimate() {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
+  const [questions, setQuestions] = useState(softwareQuestions);
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -114,6 +335,59 @@ function FreeEstimate() {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
+  };
+
+  const nextQuestion = () => {
+    const newQuestions = cloneDeep(questions);
+    const activeQuestion = newQuestions.find((question) => question.active);
+    const activeIndex = activeQuestion.id - 1;
+    const nextIndex = activeIndex + 1;
+
+    newQuestions[activeIndex] = { ...activeQuestion, active: false };
+    newQuestions[nextIndex] = { ...newQuestions[nextIndex], active: true };
+
+    setQuestions(newQuestions);
+  };
+
+  const prevQuestion = () => {
+    const newQuestions = cloneDeep(questions);
+    const activeQuestion = newQuestions.find((question) => question.active);
+    const activeIndex = activeQuestion.id - 1;
+    const nextIndex = activeIndex - 1;
+
+    newQuestions[activeIndex] = { ...activeQuestion, active: false };
+    newQuestions[nextIndex] = { ...newQuestions[nextIndex], active: true };
+
+    setQuestions(newQuestions);
+  };
+
+  const disablePrevNavigation = () => {
+    const activeQuestion = questions.find((question) => question.active);
+
+    if (activeQuestion.id === 1) {
+      return true;
+    }
+    return false;
+  };
+
+  const disableNextNavigation = () => {
+    const activeQuestion = questions.find((question) => question.active);
+
+    if (activeQuestion.id === questions.length - 1) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleSelect = (id) => {
+    const newQuestions = cloneDeep(questions);
+    const activeQuestion = newQuestions.find((question) => question.active);
+    const activeIndex = activeQuestion.id - 1;
+    const newSelected = newQuestions[activeIndex].options[id - 1];
+
+    newSelected.selected = !newSelected.selected;
+
+    setQuestions(newQuestions);
   };
 
   return (
@@ -137,9 +411,9 @@ function FreeEstimate() {
         style={{ marginRight: "2em", marginBottom: "25em" }}
         lg
       >
-        {defaultQuestions
+        {questions
           .filter((question) => question.active)
-          .map((question, index) => (
+          .map((question) => (
             <React.Fragment key={question.id}>
               <Grid item>
                 <Typography
@@ -164,8 +438,25 @@ function FreeEstimate() {
               </Grid>
               <Grid item container>
                 {question.options.map((option) => (
-                  <Grid item container direction="column" key={option.id} md>
-                    <Grid item style={{ maxWidth: "12em" }}>
+                  <Grid
+                    item
+                    container
+                    direction="column"
+                    key={option.id}
+                    alignItems="center"
+                    component={Button}
+                    onClick={() => handleSelect(option.id)}
+                    style={{
+                      display: "grid",
+                      textTransform: "none",
+                      borderRadius: 0,
+                      backgroundColor: option.selected
+                        ? theme.palette.common.orange
+                        : null,
+                    }}
+                    md
+                  >
+                    <Grid item style={{ maxWidth: "14em" }}>
                       <Typography
                         variant="h6"
                         align="center"
@@ -196,10 +487,26 @@ function FreeEstimate() {
           style={{ marginTop: "3em" }}
         >
           <Grid item>
-            <img src={backArrow} alt="Arrow for Backward" />
+            <IconButton
+              disabled={disablePrevNavigation()}
+              onClick={prevQuestion}
+            >
+              <img
+                src={disablePrevNavigation() ? backArrowDisabled : backArrow}
+                alt="Arrow for Backward"
+              />
+            </IconButton>
           </Grid>
           <Grid item>
-            <img src={nextArrow} alt="Arrow for Forward" />
+            <IconButton
+              disabled={disableNextNavigation()}
+              onClick={nextQuestion}
+            >
+              <img
+                src={disableNextNavigation() ? nextArrowDisabled : nextArrow}
+                alt="Arrow for Forward"
+              />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid item>
