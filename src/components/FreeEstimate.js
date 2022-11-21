@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 const defaultQuestions = [
   {
     id: 1,
-    title: "Which service are you interested in?",
+    title: "For which option can we help?",
     subtitle: null,
     active: true,
     options: [
@@ -104,7 +104,7 @@ const softwareQuestions = [
   { ...defaultQuestions[0], active: false },
   {
     id: 2,
-    title: "Which platforms do you need supported?",
+    title: "Which platform(s) do you need?",
     subtitle: "Select all that apply.",
     options: [
       {
@@ -139,7 +139,7 @@ const softwareQuestions = [
   },
   {
     id: 3,
-    title: "Which features do you expect to use?",
+    title: "Which feature(s) do you expect?",
     subtitle: "Select all that apply.",
     options: [
       {
@@ -174,7 +174,7 @@ const softwareQuestions = [
   },
   {
     id: 4,
-    title: "Which features do you expect to use?",
+    title: "Which feature(s) do you expect?",
     subtitle: "Select all that apply.",
     options: [
       {
@@ -209,7 +209,7 @@ const softwareQuestions = [
   },
   {
     id: 5,
-    title: "What type of custom features do you expect to need?",
+    title: "Which complexity do you need?",
     subtitle: "Select one.",
     options: [
       {
@@ -283,13 +283,13 @@ const websiteQuestions = [
   { ...defaultQuestions[0], active: false },
   {
     id: 2,
-    title: "Which type of website are you wanting?",
+    title: "Which use case do you need?",
     subtitle: "Select one.",
     options: [
       {
         id: 1,
         title: "Basic",
-        subtitle: "(Informational)",
+        subtitle: null,
         icon: info,
         iconAlt: "person outline",
         selected: false,
@@ -298,7 +298,7 @@ const websiteQuestions = [
       {
         id: 2,
         title: "Interactive",
-        subtitle: "(Users, API's, Messaging)",
+        subtitle: null,
         icon: customized,
         iconAlt: "outline of two people",
         selected: false,
@@ -307,7 +307,7 @@ const websiteQuestions = [
       {
         id: 3,
         title: "E-Commerce",
-        subtitle: "(Sales)",
+        subtitle: null,
         icon: globe,
         iconAlt: "outline of three people",
         selected: false,
@@ -326,7 +326,7 @@ function FreeEstimate() {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const [questions, setQuestions] = useState(softwareQuestions);
+  const [questions, setQuestions] = useState(defaultQuestions);
 
   const defaultOptions = {
     loop: true,
@@ -373,7 +373,7 @@ function FreeEstimate() {
   const disableNextNavigation = () => {
     const activeQuestion = questions.find((question) => question.active);
 
-    if (activeQuestion.id === questions.length - 1) {
+    if (activeQuestion.id === 1 || activeQuestion.id === questions.length) {
       return true;
     }
     return false;
@@ -381,13 +381,34 @@ function FreeEstimate() {
 
   const handleSelect = (id) => {
     const newQuestions = cloneDeep(questions);
+
     const activeQuestion = newQuestions.find((question) => question.active);
     const activeIndex = activeQuestion.id - 1;
-    const newSelected = newQuestions[activeIndex].options[id - 1];
+    const newSelectedOption = newQuestions[activeIndex].options[id - 1];
 
-    newSelected.selected = !newSelected.selected;
+    const oldSelectedOption = activeQuestion.options.find(
+      (option) => option.selected
+    );
 
-    setQuestions(newQuestions);
+    if (activeQuestion.subtitle === "Select one." && oldSelectedOption) {
+      oldSelectedOption.selected = !oldSelectedOption.selected;
+    }
+
+    newSelectedOption.selected = !newSelectedOption.selected;
+
+    switch (newSelectedOption.title) {
+      case "Software Development":
+        setQuestions(softwareQuestions);
+        break;
+      case "Mobile Development":
+        setQuestions(softwareQuestions);
+        break;
+      case "Website Development":
+        setQuestions(websiteQuestions);
+        break;
+      default:
+        setQuestions(newQuestions);
+    }
   };
 
   return (
