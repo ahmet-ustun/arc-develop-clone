@@ -127,13 +127,11 @@ function ContactUs({ setTabValue }) {
           ? setEmailHelper("")
           : setEmailHelper("Invalid Email");
         break;
-      case "phone":
+      default:
         setPhone(event.target.value);
         phoneRegex.test(event.target.value)
           ? setPhoneHelper("")
           : setPhoneHelper("Invalid Phone");
-        break;
-      default:
         break;
     }
   };
@@ -285,18 +283,18 @@ function ContactUs({ setTabValue }) {
                   onChange={handleChange}
                 />
               </Grid>
-            </Grid>
-            <Grid item style={{ width: "96.5%" }}>
-              <TextField
-                id="text"
-                className={classes.message}
-                value={text}
-                fullWidth
-                multiline
-                minRows={10}
-                InputProps={{ disableUnderline: true }}
-                onChange={(event) => setText(event.target.value)}
-              />
+              <Grid item style={{ width: "96.5%" }}>
+                <TextField
+                  id="text"
+                  className={classes.message}
+                  value={text}
+                  fullWidth
+                  multiline
+                  minRows={10}
+                  InputProps={{ disableUnderline: true }}
+                  onChange={(event) => setText(event.target.value)}
+                />
+              </Grid>
             </Grid>
             <Grid
               item
@@ -376,20 +374,20 @@ function ContactUs({ setTabValue }) {
                 onChange={handleChange}
               />
             </Grid>
-          </Grid>
-          <Grid item style={{ width: "96.5%" }}>
-            <TextField
-              id="text"
-              className={classes.message}
-              style={{ borderColor: "#97A2AA" }}
-              value={text}
-              disabled
-              fullWidth
-              multiline
-              minRows={10}
-              InputProps={{ disableUnderline: true }}
-              onChange={(event) => setText(event.target.value)}
-            />
+            <Grid item style={{ width: "96.5%" }}>
+              <TextField
+                id="text"
+                className={classes.message}
+                style={{ borderColor: "#97A2AA" }}
+                value={text}
+                disabled
+                fullWidth
+                multiline
+                minRows={10}
+                InputProps={{ disableUnderline: true }}
+                onChange={(event) => setText(event.target.value)}
+              />
+            </Grid>
           </Grid>
           <Grid
             item
