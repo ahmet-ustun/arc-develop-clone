@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     height: 50,
     width: 205,
     fontSize: "1.25rem",
-    marginTop: "5em",
+    marginTop: "2.5em",
     "&:hover": {
       backgroundColor: theme.palette.secondary.light,
     },
@@ -360,8 +360,8 @@ function FreeEstimate() {
   const [platforms, setPlatforms] = useState([]);
   const [features, setFeatures] = useState([]);
   const [complexity, setComplexity] = useState("");
-  const [category, setCategory] = useState("");
   const [userCount, setUserCount] = useState("");
+  const [category, setCategory] = useState("");
 
   const defaultOptions = {
     loop: true,
@@ -394,6 +394,14 @@ function FreeEstimate() {
     newQuestions[nextIndex] = { ...newQuestions[nextIndex], active: true };
 
     setQuestions(newQuestions);
+  };
+
+  const cleanUpStates = () => {
+    setPlatforms([]);
+    setFeatures([]);
+    setComplexity("");
+    setUserCount("");
+    setCategory("");
   };
 
   const disablePrevNavigation = () => {
@@ -435,14 +443,17 @@ function FreeEstimate() {
       case "Software Development":
         setQuestions(softwareQuestions);
         setService(newSelectedOption.title);
+        cleanUpStates();
         break;
       case "Mobile Development":
         setQuestions(softwareQuestions);
         setService(newSelectedOption.title);
+        cleanUpStates();
         break;
       case "Website Development":
         setQuestions(websiteQuestions);
         setService(newSelectedOption.title);
+        cleanUpStates();
         break;
       default:
         setQuestions(newQuestions);
@@ -545,15 +556,155 @@ function FreeEstimate() {
     setComplexity(newComplexity[0]);
   };
 
+  const getCategory = () => {
+    if (questions.length === 2) {
+      const newCategory = questions
+        .find((question) => question.title === "Which use case do you need?")
+        .options.find((option) => option.selected).title;
+
+      setCategory(newCategory);
+    }
+  };
+
+  const softwareSelection = (
+    <Grid container direction="column">
+      <Grid
+        item
+        container
+        alignItems="center"
+        style={{ marginBottom: "1.25em" }}
+      >
+        <Grid item xs={matchesSM ? 1 : 2}>
+          <img src={check} alt="Icon for Selection" />
+        </Grid>
+        <Grid item xs={matchesSM ? 11 : 10}>
+          <Typography variant="body1">
+            You want {service}{" "}
+            {platforms.length
+              ? `for ${
+                  //if only web application is selected...
+                  platforms.indexOf("Web Application") > -1 &&
+                  platforms.length === 1
+                    ? //then finish sentence here
+                      "a Web Application"
+                    : //otherwise, if web application and another platform is selected...
+                    platforms.indexOf("Web Application") > -1 &&
+                      platforms.length === 2
+                    ? //then finish the sentence here
+                      `a Web Application and an ${platforms[1]}`
+                    : //if only one platform is selected which isn't web application...
+                    platforms.length === 1
+                    ? //then finish the sentence here
+                      `an ${platforms[0]}`
+                    : //otherwise, if other two options are selected...
+                    platforms.length === 2
+                    ? //then finish the sentence here
+                      "an iOS Application and an Android Application"
+                    : //otherwise, if all three options are selected...
+                    platforms.length === 3
+                    ? //then finish the sentence here
+                      "a Web Application, an iOS Application, and an Android Application"
+                    : null
+                };`
+              : null}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        alignItems="center"
+        style={{ marginBottom: "1.25em" }}
+      >
+        <Grid item xs={matchesSM ? 1 : 2}>
+          <img src={check} alt="Icon for Selection" />
+        </Grid>
+        <Grid item xs={matchesSM ? 11 : 10}>
+          <Typography variant="body1">
+            {"with "}
+            {/* if we have features... */}
+            {features.length > 0
+              ? //and there's only 1 feature...
+                features.length === 1
+                ? //then end the sentence here
+                  `${features[0]}.`
+                : //otherwise, if there are 2 features...
+                features.length === 2
+                ? //then end the sentence here
+                  `${features[0]} and ${features[1]}.`
+                : //otherwise, if there are 3+ features...
+                  features
+                    //filter out the very last feature...
+                    .filter((feature, index) => index !== features.length - 1)
+                    //and for those features return names...
+                    .map((feature, index) => (
+                      <span key={index}>{`${feature}, `}</span>
+                    ))
+              : null}
+            {features.length > 2
+              ? //and then finally add the last feature
+                ` and ${features[features.length - 1]}.`
+              : null}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid item container alignItems="center">
+        <Grid item xs={matchesSM ? 1 : 2}>
+          <img src={check} alt="Icon for Selection" />
+        </Grid>
+        <Grid item xs={matchesSM ? 11 : 10}>
+          <Typography variant="body1">
+            The features will be of {complexity}, and the project will be used
+            by {userCount} users.
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+
+  const websiteSelection = (
+    <Grid container direction="column">
+      <Grid item container alignItems="center" spacing={2}>
+        <Grid item xs={matchesSM ? 1 : 2}>
+          <img src={check} alt="Icon for Selection" />
+        </Grid>
+        <Grid item xs={matchesSM ? 11 : 10}>
+          <Typography variant="body1">
+            You want{" "}
+            {category === "Basic"
+              ? "a Basic Website"
+              : `an ${category} Website`}
+            .
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <Grid container>
-      <Grid item container direction="column" lg>
-        <Grid item style={{ marginTop: "2em", marginLeft: "5em" }}>
-          <Typography variant="h2">Estimate</Typography>
+      <Grid
+        item
+        container
+        direction="column"
+        lg
+        alignItems={matchesMD ? "center" : undefined}
+      >
+        <Grid
+          item
+          style={{ marginTop: "2em", marginLeft: matchesMD ? 0 : "5em" }}
+        >
+          <Typography variant="h2" align={matchesMD ? "center" : "left"}>
+            Estimate
+          </Typography>
         </Grid>
         <Grid
           item
-          style={{ marginRight: "10em", maxWidth: "50em", marginTop: "7.5em" }}
+          style={{
+            marginRight: matchesMD ? 0 : "10em",
+            maxWidth: "50em",
+            marginTop: "7.5em",
+          }}
         >
           <Lottie options={defaultOptions} height="100%" width="100%" />
         </Grid>
@@ -563,7 +714,7 @@ function FreeEstimate() {
         container
         direction="column"
         alignItems="center"
-        style={{ marginRight: "2em", marginBottom: "25em" }}
+        style={{ marginRight: matchesMD ? 0 : "2em", marginBottom: "25em" }}
         lg
       >
         {questions
@@ -577,7 +728,7 @@ function FreeEstimate() {
                   style={{
                     fontWeight: 500,
                     marginTop: "5em",
-                    fontSize: "2.25rem",
+                    fontSize: matchesSM ? "2rem" : "2.25rem",
                   }}
                   gutterBottom
                 >
@@ -605,6 +756,7 @@ function FreeEstimate() {
                       display: "grid",
                       textTransform: "none",
                       borderRadius: 0,
+                      marginBottom: matchesSM ? "1.25em" : 0,
                       backgroundColor: option.selected
                         ? theme.palette.common.orange
                         : null,
@@ -674,23 +826,40 @@ function FreeEstimate() {
               getPlatforms();
               getFeatures();
               getComplexity();
+              getCategory();
             }}
           >
             Get Estimate
           </Button>
         </Grid>
       </Grid>
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-        <Grid container justifyContent="center">
-          <Grid item>
-            <Typography variant="h2" align="center">
-              Estimate
-            </Typography>
-          </Grid>
-        </Grid>
+      <Dialog
+        open={isDialogOpen}
+        style={{ zIndex: 1310 }}
+        PaperProps={{ style: { padding: "0.8em 0" } }}
+        fullWidth
+        maxWidth="lg"
+        fullScreen={matchesSM}
+        onClose={() => setIsDialogOpen(false)}
+      >
         <DialogContent>
-          <Grid container>
-            <Grid item container direction="column" md={7}>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Typography variant="h2" align="center">
+                Estimate
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container justifyContent="space-around" spacing={2}>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{
+                maxWidth: matchesSM ? null : matchesMD ? "25em" : "30em",
+              }}
+              md={7}
+            >
               <Grid item>
                 <TextField
                   id="name"
@@ -722,7 +891,7 @@ function FreeEstimate() {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item style={{ width: "97.8%" }}>
+              <Grid item style={{ width: "97.5%" }}>
                 <TextField
                   id="text"
                   className={classes.message}
@@ -734,7 +903,7 @@ function FreeEstimate() {
                   onChange={(event) => setText(event.target.value)}
                 />
               </Grid>
-              <Grid item>
+              <Grid item style={{ marginTop: "2.5em" }}>
                 <Typography variant="body1" paragraph>
                   We can create this digital solution for an estimated{" "}
                   <span className={classes.specialText}>${total}</span>.
@@ -745,104 +914,47 @@ function FreeEstimate() {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container direction="column" md={5}>
-              <Grid item>
-                <Grid container direction="column">
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="Icon for Selection" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        You want {service}{" "}
-                        {platforms.length
-                          ? `for ${
-                              //if only web application is selected...
-                              platforms.indexOf("Web Application") > -1 &&
-                              platforms.length === 1
-                                ? //then finish sentence here
-                                  "a Web Application"
-                                : //otherwise, if web application and another platform is selected...
-                                platforms.indexOf("Web Application") > -1 &&
-                                  platforms.length === 2
-                                ? //then finish the sentence here
-                                  `a Web Application and an ${platforms[1]}`
-                                : //if only one platform is selected which isn't web application...
-                                platforms.length === 1
-                                ? //then finish the sentence here
-                                  `an ${platforms[0]}`
-                                : //otherwise, if other two options are selected...
-                                platforms.length === 2
-                                ? //then finish the sentence here
-                                  "an iOS Application and an Android Application"
-                                : //otherwise, if all three options are selected...
-                                platforms.length === 3
-                                ? //then finish the sentence here
-                                  "a Web Application, an iOS Application, and an Android Application"
-                                : null
-                            };`
-                          : null}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="Icon for Selection" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        {"with "}
-                        {/* if we have features... */}
-                        {features.length > 0
-                          ? //and there's only 1 feature...
-                            features.length === 1
-                            ? //then end the sentence here
-                              `${features[0]}.`
-                            : //otherwise, if there are 2 features...
-                            features.length === 2
-                            ? //then end the sentence here
-                              `${features[0]} and ${features[1]}.`
-                            : //otherwise, if there are 3+ features...
-                              features
-                                //filter out the very last feature...
-                                .filter(
-                                  (feature, index) =>
-                                    index !== features.length - 1
-                                )
-                                //and for those features return names...
-                                .map((feature, index) => (
-                                  <span key={index}>{`${feature}, `}</span>
-                                ))
-                          : null}
-                        {features.length > 2
-                          ? //and then finally add the last feature
-                            ` and ${features[features.length - 1]}.`
-                          : null}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="Icon for Selection" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        The features will be of {complexity}, and the project
-                        will be used by {userCount} users.
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{
+                maxWidth: matchesSM ? null : "30em",
+              }}
+              md={5}
+            >
+              <Grid item style={{ marginTop: matchesSM ? 0 : "1.25em" }}>
+                {questions.length > 2 ? softwareSelection : websiteSelection}
               </Grid>
-              <Grid item>
-                <Button variant="contained" className={classes.estimateButton}>
-                  Confirm
-                  <img
-                    src={paperPlane}
-                    alt="Paper Airplane"
-                    style={{ marginLeft: "0.5em" }}
-                  />
-                </Button>
+              <Grid
+                item
+                container
+                justifyContent="space-around"
+                alignItems="center"
+                style={{ marginBottom: matchesSM && "1.25em" }}
+              >
+                <Grid item>
+                  <Button
+                    color="primary"
+                    style={{ marginTop: "3.5em" }}
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    className={classes.estimateButton}
+                  >
+                    Confirm
+                    <img
+                      src={paperPlane}
+                      alt="Paper Airplane"
+                      style={{ marginLeft: "0.5em" }}
+                    />
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

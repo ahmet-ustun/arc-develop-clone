@@ -324,7 +324,8 @@ function ContactUs({ setTabValue }) {
       <Dialog
         open={isOpen}
         style={{ zIndex: 1310 }}
-        fullScreen={matchesXS}
+        fullScreen={matchesSM}
+        PaperProps={{ style: { padding: "0.8em" } }}
         onClose={() => setIsOpen(false)}
       >
         <DialogContent>
@@ -374,7 +375,12 @@ function ContactUs({ setTabValue }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item style={{ width: "96.5%" }}>
+            <Grid
+              item
+              style={{
+                width: matchesXS ? "96.5%" : matchesSM ? "98%" : "96.5%",
+              }}
+            >
               <TextField
                 id="text"
                 className={classes.message}
