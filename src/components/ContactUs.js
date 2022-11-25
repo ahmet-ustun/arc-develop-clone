@@ -138,6 +138,7 @@ function ContactUs({ setTabValue }) {
 
   const handleConfirm = () => {
     setIsLoading(true);
+
     axios
       .get(
         "https://us-central1-arc-development-0.cloudfunctions.net/sendMail",
@@ -164,7 +165,7 @@ function ContactUs({ setTabValue }) {
         setIsLoading(false);
         setAlert({
           open: true,
-          message: "An error occurred, try again",
+          message: "An error occurred, try again!",
           color: "#FF3232",
         });
       });
@@ -289,6 +290,7 @@ function ContactUs({ setTabValue }) {
                   className={classes.message}
                   value={text}
                   fullWidth
+                  placeholder="Tell us more about your project"
                   multiline
                   minRows={10}
                   InputProps={{ disableUnderline: true }}

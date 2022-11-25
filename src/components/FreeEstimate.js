@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import { cloneDeep } from "lodash";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
+import Snackbar from "@material-ui/core/Snackbar";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Lottie from "react-lottie";
 
@@ -41,9 +43,6 @@ import data from "../assets/data.svg";
 import android from "../assets/android.svg";
 import globe from "../assets/globe.svg";
 import biometrics from "../assets/biometrics.svg";
-
-import CallToAction from "./ui/CallToAction.js";
-import ButtonArrow from "./ui/ButtonArrow.js";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -80,7 +79,7 @@ const defaultQuestions = [
   {
     id: 1,
     title: "For which option can we help?",
-    subtitle: null,
+    subtitle: "Select one.",
     active: true,
     options: [
       {
@@ -338,13 +337,14 @@ function FreeEstimate() {
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const emailRegex = /^\S+@\S+\.\S+$/;
   const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
 
   const [questions, setQuestions] = useState(defaultQuestions);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [name, setName] = useState("");
   const [text, setText] = useState("");
@@ -362,6 +362,12 @@ function FreeEstimate() {
   const [complexity, setComplexity] = useState("");
   const [userCount, setUserCount] = useState("");
   const [category, setCategory] = useState("");
+
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    color: "",
+  });
 
   const defaultOptions = {
     loop: true,
@@ -396,6 +402,13 @@ function FreeEstimate() {
     setQuestions(newQuestions);
   };
 
+  const clearUserInfo = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setText("");
+  };
+
   const cleanUpStates = () => {
     setPlatforms([]);
     setFeatures([]);
@@ -403,6 +416,17 @@ function FreeEstimate() {
     setUserCount("");
     setCategory("");
   };
+
+  const renderButton = (text) => (
+    <>
+      {text}
+      <img
+        src={paperPlane}
+        alt="Paper Airplane"
+        style={{ marginLeft: "0.5em" }}
+      />
+    </>
+  );
 
   const disablePrevNavigation = () => {
     const activeQuestion = questions.find((question) => question.active);
@@ -564,6 +588,80 @@ function FreeEstimate() {
 
       setCategory(newCategory);
     }
+  };
+
+  const sendEstimate = () => {
+    setIsLoading(true);
+
+    axios
+      .get(
+        "https://us-central1-arc-development-0.cloudfunctions.net/sendMail",
+        {
+          params: {
+            name,
+            email,
+            phone,
+            text,
+            total,
+            service,
+            platforms,
+            features,
+            complexity,
+            userCount,
+            category,
+          },
+        }
+      )
+      .then((response) => {
+        setIsOpen(false);
+        setIsLoading(false);
+        clearUserInfo();
+        cleanUpStates();
+        setAlert({
+          open: true,
+          message: "Request placed successfully 🎉",
+          color: "#4BB543",
+        });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setAlert({
+          open: true,
+          message: "An error occurred, try again!",
+          color: "#FF3232",
+        });
+      });
+  };
+
+  const disableEstimate = () => {
+    const selections = questions
+      .map((question, index) => {
+        const nextQuestion = questions[index + 1];
+        const lastIndex = questions.length - 1;
+
+        if (index !== lastIndex && question.title === nextQuestion.title) {
+          return [...question.options, ...nextQuestion.options].filter(
+            (option) => option.selected
+          );
+        }
+
+        if (question.title === "Which feature(s) do you expect?") {
+          return [];
+        }
+        return question.options.filter((option) => option.selected);
+      })
+      .filter((question) => question.length);
+
+    const activeQuestion = questions.find((question) => question.active);
+
+    if (activeQuestion.id === 1) {
+      return true;
+    }
+
+    if (activeQuestion.title === "Which use case do you need?") {
+      return selections.length === questions.length - 1 ? false : true;
+    }
+    return selections.length === questions.length - 2 ? false : true;
   };
 
   const softwareSelection = (
@@ -820,8 +918,9 @@ function FreeEstimate() {
           <Button
             variant="contained"
             className={classes.estimateButton}
+            disabled={disableEstimate()}
             onClick={() => {
-              setIsDialogOpen(true);
+              setIsOpen(true);
               getTotal();
               getPlatforms();
               getFeatures();
@@ -834,19 +933,19 @@ function FreeEstimate() {
         </Grid>
       </Grid>
       <Dialog
-        open={isDialogOpen}
+        open={isOpen}
         style={{ zIndex: 1310 }}
         PaperProps={{ style: { padding: "0.8em 0" } }}
         fullWidth
         maxWidth="lg"
         fullScreen={matchesSM}
-        onClose={() => setIsDialogOpen(false)}
+        onClose={() => setIsOpen(false)}
       >
         <DialogContent>
           <Grid container justifyContent="center">
             <Grid item>
-              <Typography variant="h2" align="center">
-                Estimate
+              <Typography variant="h4" align="center">
+                Request Estimate
               </Typography>
             </Grid>
           </Grid>
@@ -897,6 +996,7 @@ function FreeEstimate() {
                   className={classes.message}
                   value={text}
                   fullWidth
+                  placeholder="Tell us more about your project"
                   multiline
                   minRows={10}
                   InputProps={{ disableUnderline: true }}
@@ -904,7 +1004,11 @@ function FreeEstimate() {
                 />
               </Grid>
               <Grid item style={{ marginTop: "2.5em" }}>
-                <Typography variant="body1" paragraph>
+                <Typography
+                  variant="body1"
+                  style={{ lineHeight: 1.3 }}
+                  paragraph
+                >
                   We can create this digital solution for an estimated{" "}
                   <span className={classes.specialText}>${total}</span>.
                 </Typography>
@@ -937,7 +1041,7 @@ function FreeEstimate() {
                   <Button
                     color="primary"
                     style={{ marginTop: "3.5em" }}
-                    onClick={() => setIsDialogOpen(false)}
+                    onClick={() => setIsOpen(false)}
                   >
                     Cancel
                   </Button>
@@ -946,13 +1050,22 @@ function FreeEstimate() {
                   <Button
                     variant="contained"
                     className={classes.estimateButton}
+                    disabled={
+                      !name ||
+                      !email ||
+                      !phone ||
+                      !text ||
+                      !!emailHelper ||
+                      !!phoneHelper ||
+                      isLoading
+                    }
+                    onClick={sendEstimate}
                   >
-                    Confirm
-                    <img
-                      src={paperPlane}
-                      alt="Paper Airplane"
-                      style={{ marginLeft: "0.5em" }}
-                    />
+                    {isLoading ? (
+                      <CircularProgress size={30} />
+                    ) : (
+                      renderButton("Confirm")
+                    )}
                   </Button>
                 </Grid>
               </Grid>
@@ -960,6 +1073,20 @@ function FreeEstimate() {
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={3000}
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.color,
+            display: "block",
+            textAlign: "center",
+          },
+        }}
+        onClose={() => setAlert({ open: false, message: "", color: "" })}
+      />
     </Grid>
   );
 }
