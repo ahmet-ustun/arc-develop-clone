@@ -206,7 +206,7 @@ function ContactUs({ setTabValue }) {
           >
             <Grid item>
               <Typography
-                variant="h2"
+                variant="h1"
                 align={matchesMD ? "center" : undefined}
                 style={{ lineHeight: 1 }}
               >
@@ -474,7 +474,7 @@ function ContactUs({ setTabValue }) {
         >
           <Grid container direction="column">
             <Grid item>
-              <Typography variant="h2">
+              <Typography variant="h1">
                 Simple Software.
                 <br />
                 Visible Results.

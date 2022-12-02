@@ -92,7 +92,7 @@ function WebsiteDevelopment({ setTabValue, setItemIndex }) {
         <Grid item container className={classes.heading} direction="column">
           <Grid item>
             <Typography
-              variant="h2"
+              variant="h1"
               align={matchesMD ? "center" : "left"}
               gutterBottom
             >

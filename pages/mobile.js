@@ -74,7 +74,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        justify={matchesMD ? "center" : undefined}
+        justifyContent={matchesMD ? "center" : undefined}
         style={{ marginTop: "2em" }}
       >
         <Hidden mdDown>
@@ -102,7 +102,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
         <Grid item container className={classes.heading} direction="column">
           <Grid item>
             <Typography
-              variant="h2"
+              variant="h1"
               align={matchesMD ? "center" : "left"}
               gutterBottom
             >
@@ -194,7 +194,13 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
           </Grid>
         </Grid>
         <Grid item md>
-          <Lottie options={defaultOptions} style={{ maxWidth: "20em" }} />
+          <Lottie
+            options={defaultOptions}
+            style={{
+              maxWidth: matchesMD ? "15em" : "20em",
+              height: matchesMD && "20em",
+            }}
+          />
         </Grid>
         <Grid item container direction="column" md>
           <Grid item>
@@ -231,7 +237,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
         container
         className={classes.rowContainer}
         direction={matchesMD ? "column" : "row"}
-        style={{ marginBottom: "15em" }}
+        style={{ marginBottom: "15em", display: "grid" }}
       >
         <Grid item container direction="column" alignItems="center" md>
           <Grid item>

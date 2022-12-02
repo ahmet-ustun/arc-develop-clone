@@ -66,7 +66,7 @@ function AboutUs({ setTabValue }) {
         <link rel="canonical" key="canonical" href="www.google.com/about" />
       </Head>
       <Grid item className={classes.rowContainer} style={{ marginTop: "2em" }}>
-        <Typography variant="h2" align={matchesMD ? "center" : "left"}>
+        <Typography variant="h1" align={matchesMD ? "center" : "left"}>
           About Us
         </Typography>
       </Grid>

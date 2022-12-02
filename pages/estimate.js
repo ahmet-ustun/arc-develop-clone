@@ -790,7 +790,7 @@ function FreeEstimate() {
           item
           style={{ marginTop: "2em", marginLeft: matchesMD ? 0 : "5em" }}
         >
-          <Typography variant="h2" align={matchesMD ? "center" : "left"}>
+          <Typography variant="h1" align={matchesMD ? "center" : "left"}>
             Estimate
           </Typography>
         </Grid>
@@ -819,7 +819,7 @@ function FreeEstimate() {
             <React.Fragment key={question.id}>
               <Grid item>
                 <Typography
-                  variant="h2"
+                  variant="h1"
                   align="center"
                   style={{
                     fontWeight: 500,
