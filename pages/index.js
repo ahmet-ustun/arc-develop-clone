@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "10%",
     [theme.breakpoints.down("sm")]: {
       maxWidth: "30em",
+      marginTop: "5em",
     },
   },
   estimateButton: {

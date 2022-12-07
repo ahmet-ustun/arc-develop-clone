@@ -269,7 +269,8 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         className={classes.rowContainer}
         direction={matchesMD && "column"}
         alignItems={matchesMD && "center"}
-        justifyContent="space-between"
+        justifyContent={matchesMD ? "center" : "space-between"}
+        style={{ display: matchesMD && "grid" }}
       >
         <Grid
           item
@@ -397,8 +398,8 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         className={classes.rowContainer}
         direction={matchesMD && "column"}
         alignItems={matchesMD && "center"}
-        justifyContent="space-between"
-        style={{ marginBottom: "20em" }}
+        justifyContent={matchesMD ? "center" : "space-between"}
+        style={{ marginBottom: "20em", display: matchesMD && "grid" }}
       >
         <Grid
           item

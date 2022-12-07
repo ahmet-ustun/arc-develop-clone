@@ -237,7 +237,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
         container
         className={classes.rowContainer}
         direction={matchesMD ? "column" : "row"}
-        style={{ marginBottom: "15em", display: "grid" }}
+        style={{ marginBottom: "15em", display: matchesMD && "grid" }}
       >
         <Grid item container direction="column" alignItems="center" md>
           <Grid item>
