@@ -592,6 +592,7 @@ function FreeEstimate() {
         setIsLoading(false);
         clearUserInfo();
         cleanUpStates();
+        setQuestions(defaultQuestions);
         setAlert({
           open: true,
           message: "Request placed successfully 🎉",
