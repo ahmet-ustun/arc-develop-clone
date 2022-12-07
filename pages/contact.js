@@ -182,8 +182,16 @@ function ContactUs({ setTabValue }) {
           key="og:title"
           content="Arc Development | Contact Us"
         />
-        <meta property="og:url" key="og:url" content="www.google.com/contact" />
-        <link rel="canonical" key="canonical" href="www.google.com/contact" />
+        <meta
+          property="og:url"
+          key="og:url"
+          content="https://arc-development-clone.vercel.app/contact"
+        />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/contact"
+        />
       </Head>
       <Grid
         item

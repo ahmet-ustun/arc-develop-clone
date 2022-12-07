@@ -151,8 +151,16 @@ function LandingPage({ setTabValue, setItemIndex }) {
           key="og:title"
           content="Arc Development | Homepage"
         />
-        <meta property="og:url" key="og:url" content="www.google.com" />
-        <link rel="canonical" key="canonical" href="www.google.com" />
+        <meta
+          property="og:url"
+          key="og:url"
+          content="https://arc-development-clone.vercel.app"
+        />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app"
+        />
       </Head>
       <Grid item>
         {/*----- Hero Intro Block -----*/}

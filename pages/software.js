@@ -102,9 +102,13 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         <meta
           property="og:url"
           key="og:url"
-          content="www.google.com/software"
+          content="https://arc-development-clone.vercel.app/software"
         />
-        <link rel="canonical" key="canonical" href="www.google.com/software" />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/software"
+        />
       </Head>
       <Grid
         item

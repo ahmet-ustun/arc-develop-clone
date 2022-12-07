@@ -68,9 +68,13 @@ function Services({ setTabValue, setItemIndex }) {
         <meta
           property="og:url"
           key="og:url"
-          content="www.google.com/services"
+          content="https://arc-development-clone.vercel.app/services"
         />
-        <link rel="canonical" key="canonical" href="www.google.com/services" />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/services"
+        />
       </Head>
       <Grid
         item

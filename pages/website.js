@@ -57,8 +57,16 @@ function WebsiteDevelopment({ setTabValue, setItemIndex }) {
           key="og:title"
           content="Arc Development | Services > Website Development"
         />
-        <meta property="og:url" key="og:url" content="www.google.com/website" />
-        <link rel="canonical" key="canonical" href="www.google.com/website" />
+        <meta
+          property="og:url"
+          key="og:url"
+          content="https://arc-development-clone.vercel.app/website"
+        />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/website"
+        />
       </Head>
       <Grid
         item

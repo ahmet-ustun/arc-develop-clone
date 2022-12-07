@@ -60,12 +60,12 @@ function Revolution({ setTabValue }) {
         <meta
           property="og:url"
           key="og:url"
-          content="www.google.com/revolution"
+          content="https://arc-development-clone.vercel.app/revolution"
         />
         <link
           rel="canonical"
           key="canonical"
-          href="www.google.com/revolution"
+          href="https://arc-development-clone.vercel.app/revolution"
         />
       </Head>
       <Grid item className={classes.rowContainer} style={{ marginTop: "2em" }}>

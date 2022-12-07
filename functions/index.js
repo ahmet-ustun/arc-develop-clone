@@ -268,7 +268,7 @@ exports.sendMail = functions.https.onRequest((request, response) => {
                               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td align="center">
-                                    <a href="http://www.google.com" target="_blank">
+                                    <a href="https://arc-development-clone.vercel.app" target="_blank">
                                       <img align="center" src="https://i.imgur.com/o1hebvN.jpg" alt="Arc Development" width="600"
                                         height="" style="width:600px; max-width:600px; display:block;" class="m_device_width" />
                                     </a>
@@ -680,7 +680,7 @@ exports.sendMail = functions.https.onRequest((request, response) => {
                               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td align="center">
-                                    <a href="http://www.google.com" target="_blank">
+                                    <a href="https://arc-development-clone.vercel.app" target="_blank">
                                       <img align="center" src="https://i.imgur.com/o1hebvN.jpg" alt="Arc Development" width="600"
                                         height="" style="width:600px; max-width:600px; display:block;" class="m_device_width" />
                                     </a>

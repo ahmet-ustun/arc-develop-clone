@@ -62,8 +62,16 @@ function AboutUs({ setTabValue }) {
           key="og:title"
           content="Arc Development | About Us"
         />
-        <meta property="og:url" key="og:url" content="www.google.com/about" />
-        <link rel="canonical" key="canonical" href="www.google.com/about" />
+        <meta
+          property="og:url"
+          key="og:url"
+          content="https://arc-development-clone.vercel.app/about"
+        />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/about"
+        />
       </Head>
       <Grid item className={classes.rowContainer} style={{ marginTop: "2em" }}>
         <Typography variant="h1" align={matchesMD ? "center" : "left"}>

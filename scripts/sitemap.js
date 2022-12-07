@@ -3,7 +3,7 @@ const getPathsObject = require("./getPathsObject");
 const formatDate = require("./formatDate");
 
 const robotsTxt = `User-agent: *
-Sitemap: https://www.google.com/sitemap_local.xml
+Sitemap: https://arc-development-clone.vercel.app/sitemap_local.xml
 Disallow:
 `;
 
@@ -23,8 +23,8 @@ const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     ${
       path === "/index"
-        ? `<loc>https://www.google.com</loc>`
-        : `<loc>https://www.google.com${path}</loc>`
+        ? `<loc>https://arc-development-clone.vercel.app</loc>`
+        : `<loc>https://arc-development-clone.vercel.app${path}</loc>`
     }
     <lastmod>${
       pathsObject[path].lastModified

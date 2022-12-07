@@ -67,8 +67,16 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
           key="og:title"
           content="Arc Development | Services > Mobile App Development"
         />
-        <meta property="og:url" key="og:url" content="www.google.com/mobile" />
-        <link rel="canonical" key="canonical" href="www.google.com/mobile" />
+        <meta
+          property="og:url"
+          key="og:url"
+          content="https://arc-development-clone.vercel.app/mobile"
+        />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/mobile"
+        />
       </Head>
       <Grid
         item

@@ -776,9 +776,13 @@ function FreeEstimate() {
         <meta
           property="og:url"
           key="og:url"
-          content="www.google.com/estimate"
+          content="https://arc-development-clone.vercel.app/estimate"
         />
-        <link rel="canonical" key="canonical" href="www.google.com/estimate" />
+        <link
+          rel="canonical"
+          key="canonical"
+          href="https://arc-development-clone.vercel.app/estimate"
+        />
       </Head>
       <Grid
         item
