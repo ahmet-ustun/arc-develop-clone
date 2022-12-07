@@ -110,7 +110,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        justify={matchesMD ? "center" : undefined}
+        justifyContent={matchesMD ? "center" : undefined}
         style={{ marginTop: "2em" }}
       >
         <Hidden mdDown>
@@ -267,8 +267,8 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        direction={matchesMD && "column"}
-        alignItems={matchesMD && "center"}
+        direction={matchesMD ? "column" : "row"}
+        alignItems={matchesMD ? "center" : undefined}
         justifyContent={matchesMD ? "center" : "space-between"}
         style={{ display: matchesMD && "grid" }}
       >
@@ -396,8 +396,8 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         item
         container
         className={classes.rowContainer}
-        direction={matchesMD && "column"}
-        alignItems={matchesMD && "center"}
+        direction={matchesMD ? "column" : "row"}
+        alignItems={matchesMD ? "center" : undefined}
         justifyContent={matchesMD ? "center" : "space-between"}
         style={{ marginBottom: "20em", display: matchesMD && "grid" }}
       >

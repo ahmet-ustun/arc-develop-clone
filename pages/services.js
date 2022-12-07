@@ -150,7 +150,7 @@ function Services({ setTabValue, setItemIndex }) {
         <Grid
           container
           className={classes.serviceContainer}
-          justifyContent={matchesSM && "center"}
+          justifyContent={matchesSM ? "center" : undefined}
         >
           <Grid
             item
