@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { cloneDeep } from "lodash";
 import Lottie from "react-lottie";
@@ -313,6 +313,8 @@ function FreeEstimate() {
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const mobileRef = useRef(null);
+
   const emailRegex = /^\S+@\S+\.\S+$/;
   const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
 
@@ -354,6 +356,10 @@ function FreeEstimate() {
   };
 
   const nextQuestion = () => {
+    if (matchesSM) {
+      window.scrollTo(0, mobileRef.current.offsetTop + 75);
+    }
+
     const newQuestions = cloneDeep(questions);
     const activeQuestion = newQuestions.find((question) => question.active);
     const activeIndex = activeQuestion.id - 1;
@@ -366,6 +372,10 @@ function FreeEstimate() {
   };
 
   const prevQuestion = () => {
+    if (matchesSM) {
+      window.scrollTo(0, mobileRef.current.offsetTop + 75);
+    }
+
     const newQuestions = cloneDeep(questions);
     const activeQuestion = newQuestions.find((question) => question.active);
     const activeIndex = activeQuestion.id - 1;
@@ -440,16 +450,25 @@ function FreeEstimate() {
 
     switch (newSelectedOption.title) {
       case "Software Development":
+        if (matchesSM) {
+          window.scrollTo(0, mobileRef.current.offsetTop + 75);
+        }
         setQuestions(softwareQuestions);
         setService(newSelectedOption.title);
         cleanUpStates();
         break;
       case "Mobile Development":
+        if (matchesSM) {
+          window.scrollTo(0, mobileRef.current.offsetTop + 75);
+        }
         setQuestions(softwareQuestions);
         setService(newSelectedOption.title);
         cleanUpStates();
         break;
       case "Website Development":
+        if (matchesSM) {
+          window.scrollTo(0, mobileRef.current.offsetTop + 75);
+        }
         setQuestions(websiteQuestions);
         setService(newSelectedOption.title);
         cleanUpStates();
@@ -822,7 +841,7 @@ function FreeEstimate() {
           .filter((question) => question.active)
           .map((question) => (
             <React.Fragment key={question.id}>
-              <Grid item>
+              <Grid item ref={mobileRef}>
                 <Typography
                   variant="h1"
                   align="center"
