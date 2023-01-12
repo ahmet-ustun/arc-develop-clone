@@ -13,9 +13,12 @@ import ButtonArrow from "../src/ui/ButtonArrow.js";
 
 const useStyles = makeStyles((theme) => ({
   serviceContainer: {
-    marginTop: "10em",
+    marginTop: "12em",
     [theme.breakpoints.down("sm")]: {
       padding: 25,
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: 5,
     },
   },
   icon: {
@@ -45,6 +48,7 @@ function Services({ setTabValue, setItemIndex }) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
@@ -222,7 +226,8 @@ function Services({ setTabValue, setItemIndex }) {
               Reach More. Discover More. Sell More.
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Optimized websites for search engines , built for speed.
+              Optimized websites for search engines, {matchesXS && <br />}built
+              for speed.
             </Typography>
             <Button
               className={classes.learnButton}

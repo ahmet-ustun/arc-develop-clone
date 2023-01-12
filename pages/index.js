@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: 25,
     },
+    [theme.breakpoints.down("xs")]: {
+      padding: 5,
+    },
   },
   heroTextContainer: {
     minWidth: "21.5em",
@@ -336,7 +339,8 @@ function LandingPage({ setTabValue, setItemIndex }) {
               Reach More. Discover More. Sell More.
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-              Optimized websites for search engines , built for speed.
+              Optimized websites for search engines, {matchesXS && <br />}built
+              for speed.
             </Typography>
             <Button
               className={classes.learnButton}
