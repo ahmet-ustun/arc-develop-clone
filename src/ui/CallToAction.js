@@ -49,6 +49,7 @@ function CallToAction({ setTabValue }) {
   const theme = useTheme();
 
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid
@@ -67,14 +68,17 @@ function CallToAction({ setTabValue }) {
       >
         <Grid container direction="column">
           <Grid item>
-            <Typography variant="h1">
+            <Typography
+              variant="h1"
+              style={{ fontSize: matchesXS && "2.25em" }}
+            >
               Simple Software.
               <br />
               Visible Results.
             </Typography>
             <Typography
               variant="subtitle2"
-              style={{ fontSize: "1.5rem" }}
+              style={{ fontSize: matchesXS ? "1.25rem" : "1.5rem" }}
               gutterBottom
             >
               Take advantage of the 21st century.
@@ -108,6 +112,7 @@ function CallToAction({ setTabValue }) {
           className={classes.estimateButton}
           component={Link}
           href="/estimate"
+          style={{ transform: matchesXS && "scale(0.8)" }}
           onClick={() => setTabValue(5)}
         >
           Free Estimate
