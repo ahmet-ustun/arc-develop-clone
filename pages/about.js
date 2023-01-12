@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "3em",
       paddingRight: "3em",
     },
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
+    },
   },
   missionStatement: {
     fontStyle: "italic",
@@ -45,6 +49,7 @@ function AboutUs({ setTabValue }) {
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   return (
     <Grid container direction="column">
