@@ -112,6 +112,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
             <Typography
               variant="h1"
               align={matchesMD ? "center" : "left"}
+              style={{ fontSize: matchesXS && "2.25em" }}
               gutterBottom
             >
               Mobile App Development

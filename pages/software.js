@@ -44,6 +44,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
 
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
 
   const documentOptions = {
     loop: true,
@@ -141,6 +142,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
             <Typography
               variant="h1"
               align={matchesMD ? "center" : "left"}
+              style={{ fontSize: matchesXS && "2.25em" }}
               gutterBottom
             >
               Software Development
