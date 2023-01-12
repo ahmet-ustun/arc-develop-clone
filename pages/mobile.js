@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "3em",
       paddingRight: "3em",
     },
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
+    },
   },
   heading: {
     maxWidth: "40em",

@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "3em",
       paddingRight: "3em",
     },
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: "1em",
+      paddingRight: "1em",
+    },
   },
   heading: {
     maxWidth: "40em",
@@ -324,7 +328,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item md>
+          <Grid item md style={{ marginTop: matchesSM && "2em" }}>
             <Lottie
               options={documentOptions}
               style={{ maxHeight: 275, maxWidth: 275, minHeight: 250 }}
@@ -335,10 +339,10 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           item
           container
           className={classes.itemContainer}
-          direction={matchesSM ? "column" : "row"}
+          direction={matchesSM ? "column-reverse" : "row"}
           md
         >
-          <Grid item md>
+          <Grid item md style={{ marginTop: matchesSM && "2em" }}>
             <Lottie
               options={scalableOptions}
               style={{ maxHeight: 260, maxWidth: 280 }}
@@ -374,8 +378,13 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
         className={classes.rowContainer}
         style={{ margin: "20em auto" }}
       >
-        <Grid item container direction="column" alignItems="center">
-          <Grid item>
+        <Grid
+          item
+          container
+          direction={matchesSM ? "column-reverse" : "column"}
+          alignItems="center"
+        >
+          <Grid item style={{ marginTop: matchesSM && "2em" }}>
             <img
               src="/assets/root.svg"
               alt="Tree with Roots"
@@ -451,7 +460,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item md>
+          <Grid item md style={{ marginTop: matchesSM && "2em" }}>
             <Lottie
               options={automationOptions}
               style={{ maxHeight: 290, maxWidth: 280 }}
@@ -462,10 +471,10 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
           item
           container
           className={classes.itemContainer}
-          direction={matchesSM ? "column" : "row"}
+          direction={matchesSM ? "column-reverse" : "row"}
           md
         >
-          <Grid item md>
+          <Grid item md style={{ marginTop: matchesSM && "2em" }}>
             <Lottie
               options={experienceOptions}
               style={{ maxHeight: 310, maxWidth: 155 }}
