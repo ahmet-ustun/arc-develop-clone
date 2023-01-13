@@ -12,12 +12,16 @@ import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Hidden from "@material-ui/core/Hidden";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -88,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
   menu: {
     background: theme.palette.common.blue,
     borderRadius: 0,
+    zIndex: 1305,
   },
   menuItem: {
     ...theme.typography.tab,
@@ -152,6 +157,13 @@ function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
     setOpenMenu(false);
+  };
+
+  const handleListKeyDown = (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
   };
 
   const handleMenuItem = (index) => {
@@ -244,7 +256,53 @@ function Header(props) {
           href="/estimate"
         />
       </Tabs>
-      <Menu
+      <Popper
+        open={openMenu}
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper classes={{ root: classes.menu }} elevation={0}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open}
+                  id="simple-menu"
+                  disablePadding
+                  onKeyDown={handleListKeyDown} 
+                  onMouseLeave={handleClose}
+                >
+                  {menuItems.map((menuItem, index) => (
+                    <MenuItem
+                      classes={{ root: classes.menuItem }}
+                      key={`${menuItem.name}-${index}`}
+                      component={Link}
+                      href={menuItem.path}
+                      selected={index === itemIndex && tabValue === 1}
+                      onClick={() => {
+                        handleMenuItem(index);
+                        setTabValue(1);
+                        handleClose();
+                      }}
+                    >
+                      {menuItem.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+      {/* <Menu
         id="simple-menu"
         classes={{ paper: classes.menu }}
         style={{ zIndex: 1305 }}
@@ -253,24 +311,7 @@ function Header(props) {
         elevation={0}
         keepMounted
         MenuListProps={{ onMouseLeave: handleClose }}
-      >
-        {menuItems.map((menuItem, index) => (
-          <MenuItem
-            classes={{ root: classes.menuItem }}
-            key={`${menuItem.name}-${index}`}
-            component={Link}
-            href={menuItem.path}
-            selected={index === itemIndex && tabValue === 1}
-            onClick={() => {
-              handleMenuItem(index);
-              setTabValue(1);
-              handleClose();
-            }}
-          >
-            {menuItem.name}
-          </MenuItem>
-        ))}
-      </Menu>
+      ></Menu> */}
     </React.Fragment>
   );
 
