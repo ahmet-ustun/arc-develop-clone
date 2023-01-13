@@ -244,7 +244,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
               href="/software"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(1);
+                setItemIndex(0);
               }}
             >
               <span style={{ marginRight: 10 }}>Learn More</span>
@@ -293,7 +293,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
               href="/mobile"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(2);
+                setItemIndex(1);
               }}
             >
               <span style={{ marginRight: 10 }}>Learn More</span>
@@ -349,7 +349,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
               href="/website"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(3);
+                setItemIndex(2);
               }}
             >
               <span style={{ marginRight: 10 }}>Learn More</span>

@@ -134,7 +134,6 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
               href="/services"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(0);
               }}
             >
               <img src="/assets/backArrow.svg" alt="Back to Services Page" />
@@ -200,7 +199,7 @@ function SoftwareDevelopment({ setTabValue, setItemIndex }) {
               href="/mobile"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(2);
+                setItemIndex(1);
               }}
             >
               <img

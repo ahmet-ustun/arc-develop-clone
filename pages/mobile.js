@@ -101,7 +101,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
               href="/software"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(1);
+                setItemIndex(0);
               }}
             >
               <img
@@ -158,7 +158,7 @@ function MobileAppDevelopment({ setTabValue, setItemIndex }) {
               href="/website"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(3);
+                setItemIndex(2);
               }}
             >
               <img

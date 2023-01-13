@@ -100,7 +100,6 @@ function Footer(props) {
                 href="/services"
                 onClick={() => {
                   setTabValue(1);
-                  setItemIndex(0);
                 }}
               >
                 Services
@@ -112,7 +111,7 @@ function Footer(props) {
                 href="/software"
                 onClick={() => {
                   setTabValue(1);
-                  setItemIndex(1);
+                  setItemIndex(0);
                 }}
               >
                 Software Development
@@ -124,7 +123,7 @@ function Footer(props) {
                 href="/mobile"
                 onClick={() => {
                   setTabValue(1);
-                  setItemIndex(2);
+                  setItemIndex(1);
                 }}
               >
                 Mobile App Development
@@ -136,7 +135,7 @@ function Footer(props) {
                 href="/website"
                 onClick={() => {
                   setTabValue(1);
-                  setItemIndex(3);
+                  setItemIndex(2);
                 }}
               >
                 Website Development

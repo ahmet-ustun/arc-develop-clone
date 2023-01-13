@@ -92,7 +92,7 @@ function WebsiteDevelopment({ setTabValue, setItemIndex }) {
               href="/mobile"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(2);
+                setItemIndex(1);
               }}
             >
               <img
@@ -142,7 +142,6 @@ function WebsiteDevelopment({ setTabValue, setItemIndex }) {
               href="/services"
               onClick={() => {
                 setTabValue(1);
-                setItemIndex(0);
               }}
             >
               <img
