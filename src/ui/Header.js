@@ -188,24 +188,23 @@ function Header(props) {
   ];
 
   const menuItems = [
-    { name: "Services", path: "/services", activeIndex: 1, selectedIndex: 0 },
     {
       name: "Software Development",
       path: "/software",
       activeIndex: 1,
-      selectedIndex: 1,
+      selectedIndex: 0,
     },
     {
       name: "Mobile App Development",
       path: "/mobile",
       activeIndex: 1,
-      selectedIndex: 2,
+      selectedIndex: 1,
     },
     {
       name: "Website Development",
       path: "/website",
       activeIndex: 1,
-      selectedIndex: 3,
+      selectedIndex: 2,
     },
   ];
 
@@ -246,6 +245,7 @@ function Header(props) {
             aria-owns={siteRoute.ariaOwns}
             aria-haspopup={siteRoute.ariaHasPopup}
             onMouseEnter={siteRoute.onMouseEnter}
+            onMouseLeave={() => setOpenMenu(false)}
             disableRipple
           />
         ))}
@@ -262,23 +262,24 @@ function Header(props) {
         role={undefined}
         transition
         disablePortal
+        placement="bottom-start"
       >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
+              transformOrigin: "top left",
             }}
           >
             <Paper classes={{ root: classes.menu }} elevation={0}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
-                  autoFocusItem={open}
+                  autoFocusItem={false}
                   id="simple-menu"
                   disablePadding
-                  onKeyDown={handleListKeyDown} 
+                  onKeyDown={handleListKeyDown}
                   onMouseLeave={handleClose}
+                  onMouseOver={() => setOpenMenu(true)}
                 >
                   {menuItems.map((menuItem, index) => (
                     <MenuItem
@@ -286,7 +287,11 @@ function Header(props) {
                       key={`${menuItem.name}-${index}`}
                       component={Link}
                       href={menuItem.path}
-                      selected={index === itemIndex && tabValue === 1}
+                      selected={
+                        index === itemIndex &&
+                        tabValue === 1 &&
+                        window.location.pathname !== "/services"
+                      }
                       onClick={() => {
                         handleMenuItem(index);
                         setTabValue(1);
@@ -302,16 +307,6 @@ function Header(props) {
           </Grow>
         )}
       </Popper>
-      {/* <Menu
-        id="simple-menu"
-        classes={{ paper: classes.menu }}
-        style={{ zIndex: 1305 }}
-        anchorEl={anchorEl}
-        open={openMenu}
-        elevation={0}
-        keepMounted
-        MenuListProps={{ onMouseLeave: handleClose }}
-      ></Menu> */}
     </React.Fragment>
   );
 
