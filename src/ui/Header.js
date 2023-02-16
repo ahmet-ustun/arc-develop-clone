@@ -10,7 +10,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -22,8 +21,13 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Grid from "@material-ui/core/Grid";
 
 import MenuIcon from "@material-ui/icons/Menu";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import Link from "../Link.js";
 
@@ -129,6 +133,16 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,
+  },
+  expansion: {
+    backgroundColor: theme.palette.common.blue,
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+    "&.Mui-expanded": {
+      margin: 0,
+    },
+  },
+  expansionDetails: {
+    padding: 0,
   },
 }));
 
@@ -322,31 +336,78 @@ function Header(props) {
       >
         <div className={classes.toolbarMargin} />
         <List disablePadding>
-          {siteRoutes.map((siteRoute, index) => (
-            <ListItem
-              key={`${siteRoute.name}-${index}`}
-              divider
-              button
-              component={Link}
-              href={siteRoute.path}
-              selected={tabValue === siteRoute.activeIndex}
-              onClick={() => {
-                setOpenDrawer(false);
-                setTabValue(siteRoute.activeIndex);
-              }}
-            >
-              <ListItemText
-                className={
-                  tabValue === siteRoute.activeIndex
-                    ? `${classes.drawerItem} ${classes.drawerItemSelected}`
-                    : classes.drawerItem
-                }
-                disableTypography
+          {siteRoutes.map((siteRoute, index) =>
+            siteRoute.name === "Services" ? (
+              <Accordion
+                key={`${siteRoute.name}-${index}`}
+                classes={{ root: classes.expansion }}
+                elevation={0}
               >
-                {siteRoute.name}
-              </ListItemText>
-            </ListItem>
-          ))}
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  {siteRoute.name}
+                </AccordionSummary>
+                <AccordionDetails classes={{ root: classes.expansionDetails }}>
+                  <Grid container direction="column">
+                    {menuItems.map((menuItem, index) => (
+                      <Grid key={`${menuItem.name}-${index}`}>
+                        <ListItem
+                          divider
+                          button
+                          component={Link}
+                          href={menuItem.path}
+                          selected={
+                            index === itemIndex &&
+                            tabValue === 1 &&
+                            window.location.pathname !== "/services"
+                          }
+                          onClick={() => {
+                            handleMenuItem(index);
+                            setTabValue(1);
+                            handleClose();
+                          }}
+                        >
+                          <ListItemText
+                            className={
+                              tabValue === menuItem.activeIndex
+                                ? `${classes.drawerItem} ${classes.drawerItemSelected}`
+                                : classes.drawerItem
+                            }
+                            disableTypography
+                          >
+                            {menuItem.name}
+                          </ListItemText>
+                        </ListItem>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            ) : (
+              <ListItem
+                key={`${siteRoute.name}-${index}`}
+                divider
+                button
+                component={Link}
+                href={siteRoute.path}
+                selected={tabValue === siteRoute.activeIndex}
+                onClick={() => {
+                  setOpenDrawer(false);
+                  setTabValue(siteRoute.activeIndex);
+                }}
+              >
+                <ListItemText
+                  className={
+                    tabValue === siteRoute.activeIndex
+                      ? `${classes.drawerItem} ${classes.drawerItemSelected}`
+                      : classes.drawerItem
+                  }
+                  disableTypography
+                >
+                  {siteRoute.name}
+                </ListItemText>
+              </ListItem>
+            )
+          )}
           <ListItem
             className={classes.drawerItemEstimate}
             divider
