@@ -7,6 +7,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Theme from "../src/ui/Theme.js";
 import Header from "../src/ui/Header.js";
 import Footer from "../src/ui/Footer.js";
+import Fonts from "../src/ui/Fonts.js";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -15,7 +16,9 @@ export default function MyApp(props) {
   const [itemIndex, setItemIndex] = useState(0);
 
   React.useEffect(() => {
+    Fonts();
     const jssStyles = document.querySelector("#jss-server-side");
+
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
