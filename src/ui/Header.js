@@ -139,17 +139,29 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
     "&.Mui-expanded": {
       margin: 0,
+      borderBottom: 0,
+    },
+    "&::before": {
+      backgroundColor: "rgba(0, 0, 0, 0)",
     },
   },
   expansionDetails: {
     padding: 0,
+    backgroundColor: theme.palette.primary.light,
+  },
+  expansionSummary: {
+    backgroundColor: (props) =>
+      props.tabValue === 1 ? "rgba(0, 0, 0, 0.14)" : "inherit",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.08)",
+    },
   },
 }));
 
 function Header(props) {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   const { tabValue, setTabValue, itemIndex, setItemIndex } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -278,7 +290,7 @@ function Header(props) {
         disablePortal
         placement="bottom-start"
       >
-        {({ TransitionProps, placement }) => (
+        {({ TransitionProps }) => (
           <Grow
             {...TransitionProps}
             style={{
@@ -343,8 +355,30 @@ function Header(props) {
                 classes={{ root: classes.expansion }}
                 elevation={0}
               >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  {siteRoute.name}
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon color="secondary" />}
+                  classes={{ root: classes.expansionSummary }}
+                >
+                  <ListItemText
+                    className={
+                      tabValue === siteRoute.activeIndex
+                        ? `${classes.drawerItem} ${classes.drawerItemSelected}`
+                        : classes.drawerItem
+                    }
+                    style={{
+                      margin: 0,
+                      opacity: tabValue === 1 ? 1 : null,
+                    }}
+                    disableTypography
+                    onClick={() => {
+                      setOpenDrawer(false);
+                      setTabValue(siteRoute.activeIndex);
+                    }}
+                  >
+                    <Link href={siteRoute.path} color="inherit">
+                      {siteRoute.name}
+                    </Link>
+                  </ListItemText>
                 </AccordionSummary>
                 <AccordionDetails classes={{ root: classes.expansionDetails }}>
                   <Grid container direction="column">
@@ -374,7 +408,14 @@ function Header(props) {
                             }
                             disableTypography
                           >
-                            {menuItem.name}
+                            {menuItem.name
+                              .split(" ")
+                              .filter((word) => word !== "Development")
+                              .join(" ")}
+                            <br />
+                            <span style={{ fontSize: "0.75rem" }}>
+                              Development
+                            </span>
                           </ListItemText>
                         </ListItem>
                       </Grid>
@@ -509,7 +550,7 @@ function Header(props) {
                 />
               </svg>
             </Button>
-            {matches ? siteDrawer : siteTabs}
+            {matchesMD ? siteDrawer : siteTabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
