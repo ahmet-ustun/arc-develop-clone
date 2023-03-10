@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -259,7 +260,7 @@ function Revolution({ setTabValue }) {
         style={{ marginTop: "5em" }}
       >
         <Grid item lg>
-          <img
+          <LazyLoadImage
             src="/assets/vision.svg"
             alt="View from Binoculars"
             style={{
@@ -496,7 +497,8 @@ function Revolution({ setTabValue }) {
             </Grid>
           </Grid>
           <Grid item style={{ alignSelf: "center" }} lg>
-            <img
+            <LazyLoadImage
+              threshold={400}
               src={section.icon}
               alt={section.iconAlt}
               width="100%"

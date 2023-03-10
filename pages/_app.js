@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Head from "next/head";
 
 import { ThemeProvider } from "@material-ui/core/styles";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
 
 import Theme from "../src/ui/Theme.js";
 import Header from "../src/ui/Header.js";
@@ -47,7 +48,9 @@ export default function MyApp(props) {
           setTabValue={setTabValue}
           setItemIndex={setItemIndex}
         />
-        <Footer setTabValue={setTabValue} setItemIndex={setItemIndex} />
+        <LazyLoadComponent threshold={400}>
+          <Footer setTabValue={setTabValue} setItemIndex={setItemIndex} />
+        </LazyLoadComponent>
       </ThemeProvider>
     </React.Fragment>
   );

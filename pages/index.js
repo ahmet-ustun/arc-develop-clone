@@ -4,6 +4,10 @@ import Head from "next/head";
 
 import { makeStyles, useTheme } from "@material-ui/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {
+  LazyLoadImage,
+  LazyLoadComponent,
+} from "react-lazy-load-image-component";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -256,7 +260,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
             </Button>
           </Grid>
           <Grid item>
-            <img
+            <LazyLoadImage
               className={classes.icon}
               src="/assets/customSoftwareIcon.svg"
               alt="Software Development Icon"
@@ -310,7 +314,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
               marginRight: !matchesSM && "5em",
             }}
           >
-            <img
+            <LazyLoadImage
               className={classes.icon}
               src="/assets/mobileIcon.svg"
               alt="Mobile App Development Icon"
@@ -361,7 +365,7 @@ function LandingPage({ setTabValue, setItemIndex }) {
             </Button>
           </Grid>
           <Grid item>
-            <img
+            <LazyLoadImage
               className={classes.icon}
               src="/assets/websiteIcon.svg"
               alt="Website Development Icon"
@@ -412,7 +416,9 @@ function LandingPage({ setTabValue, setItemIndex }) {
               </Grid>
             </CardContent>
           </Card>
-          <div className={classes.revolutionBackground} />
+          <LazyLoadComponent threshold={800}>
+            <div className={classes.revolutionBackground} />
+          </LazyLoadComponent>
         </Grid>
       </Grid>
       <Grid item>
@@ -491,12 +497,16 @@ function LandingPage({ setTabValue, setItemIndex }) {
               </Grid>
             </Grid>
           </Grid>
-          <div className={classes.informationBackground} />
+          <LazyLoadComponent threshold={700}>
+            <div className={classes.informationBackground} />
+          </LazyLoadComponent>
         </Grid>
       </Grid>
       <Grid item>
         {/*----- Action Call Block -----*/}
-        <CallToAction setTabValue={setTabValue} />
+        <LazyLoadComponent threshold={700}>
+          <CallToAction setTabValue={setTabValue} />
+        </LazyLoadComponent>
       </Grid>
     </Grid>
   );
