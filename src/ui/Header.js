@@ -234,25 +234,26 @@ function Header(props) {
     },
   ];
 
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : null;
+
+  const setActiveIndex = () => {
+    const foundSiteRoute = siteRoutes.find(({ path }) => path === pathname);
+    const foundMenuItem = menuItems.find(({ path }) => path === pathname);
+
+    if (foundMenuItem) {
+      setTabValue(1);
+      setItemIndex(foundMenuItem.selectedIndex);
+    } else {
+      foundSiteRoute
+        ? setTabValue(foundSiteRoute.activeIndex)
+        : setTabValue(false);
+    }
+  };
+
   useEffect(() => {
-    [...menuItems, ...siteRoutes].forEach((route) => {
-      switch (window.location.pathname) {
-        case `${route.path}`:
-          if (route.activeIndex !== tabValue) {
-            setTabValue(route.activeIndex);
-            if (route.selectedIndex && route.selectedIndex !== itemIndex) {
-              setItemIndex(route.selectedIndex);
-            }
-          }
-          break;
-        case "/estimate":
-          setTabValue(5);
-          break;
-        default:
-          break;
-      }
-    });
-  }, [tabValue, setTabValue, itemIndex, setItemIndex, siteRoutes, menuItems]);
+    setActiveIndex();
+  }, [pathname]);
 
   const siteTabs = (
     <React.Fragment>
